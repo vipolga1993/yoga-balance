@@ -1,308 +1,182 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Питание для баланса энергии и йоги</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Йога-баланс — меню из холодильника</title>
 
-  <style>
-    :root{
-      --bg:#0b0f14;
-      --card:rgba(255,255,255,.06);
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.65);
-      --line:rgba(255,255,255,.12);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    .wrap{
-      max-width:1000px;
-      margin:auto;
-      padding:20px;
-    }
-    h1{margin:0;font-size:24px}
-    h2{margin:0;font-size:16px}
-    p{margin:8px 0}
-    .muted{color:var(--muted);font-size:13px}
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:18px;
-      margin-top:18px;
-    }
-
-    label{font-size:13px;color:var(--muted)}
-    input,select{
-      width:100%;
-      padding:10px;
-      margin-top:6px;
-      border-radius:10px;
-      border:1px solid var(--line);
-      background:transparent;
-      color:var(--text);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-    }
-    @media(max-width:700px){
-      .grid{grid-template-columns:1fr}
-    }
-
-    button{
-      width:100%;
-      margin-top:14px;
-      padding:12px;
-      border-radius:14px;
-      border:none;
-      background:#38bdf8;
-      font-weight:600;
-      cursor:pointer;
-    }
-
-    .result{
-      font-size:22px;
-      margin-top:10px;
-      font-weight:700;
-    }
-
-    details.section{
-      margin-top:14px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:10px;
-      background:rgba(255,255,255,.03);
-    }
-    details summary{
-      cursor:pointer;
-      font-weight:600;
-      list-style:none;
-    }
-
-    .menu-buttons{
-      display:flex;
-      gap:6px;
-      flex-wrap:wrap;
-      margin:12px 0;
-    }
-    .menu-buttons button{
-      width:auto;
-      padding:6px 10px;
-      background:#1e293b;
-      color:white;
-      border-radius:8px;
-      font-size:13px;
-    }
-    .day{display:none;font-size:14px;line-height:1.6}
-  </style>
+<style>
+:root{
+  --bg:#f7f9f7;
+  --card:#ffffff;
+  --green:#6fbf8a;
+  --green-dark:#2f4f3f;
+  --text:#2b2b2b;
+  --muted:#6b6b6b;
+  --radius:18px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+h1{margin:0 0 8px;font-size:26px;color:var(--green-dark)}
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:14px}
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-top:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
+}
+label{font-size:14px;color:var(--muted)}
+input,select,textarea{
+  width:100%;
+  margin-top:6px;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:15px;
+}
+textarea{min-height:70px}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media(max-width:700px){
+  .grid{grid-template-columns:1fr}
+}
+button{
+  margin-top:16px;
+  padding:14px;
+  width:100%;
+  border:none;
+  border-radius:16px;
+  background:var(--green);
+  color:white;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+}
+button.secondary{
+  background:#e8f3ec;
+  color:var(--green-dark);
+}
+.result{
+  margin-top:12px;
+  font-size:18px;
+  font-weight:600;
+  color:var(--green-dark);
+}
+.menu-block{
+  margin-top:12px;
+  padding:14px;
+  border-radius:14px;
+  background:#f1f6f3;
+  font-size:15px;
+  line-height:1.6;
+}
+</style>
 </head>
 
 <body>
 <div class="wrap">
 
-  <h1>🌿 Питание для баланса энергии и йоги</h1>
-  <p class="muted">
-    Мягкий расчёт питания для поддержки практики йоги, восстановления и устойчивой энергии.
-    Это ориентир, а не диета.
-  </p>
+<h1>🌿 Меню из холодильника</h1>
+<p class="muted">
+Мягкий помощник по питанию и энергии для йоги. Без диет и давления.
+</p>
 
-  <!-- КАЛЬКУЛЯТОР -->
-  <div class="card">
-    <h2>Персональный расчёт</h2>
-
-    <div class="grid">
-      <div>
-        <label>Вес (кг)</label>
-        <input id="weight" type="number" inputmode="decimal" placeholder="Например, 62.5">
-      </div>
-      <div>
-        <label>Рост (см)</label>
-        <input id="height" type="number" inputmode="numeric" placeholder="Например, 168">
-      </div>
-      <div>
-        <label>Возраст</label>
-        <input id="age" type="number" inputmode="numeric" placeholder="Например, 34">
-      </div>
-      <div>
-        <label>Пол</label>
-        <select id="gender">
-          <option value="female">Женский</option>
-          <option value="male">Мужской</option>
-        </select>
-      </div>
-      <div>
-        <label>Активность</label>
-        <select id="activity">
-          <option value="1.35">Низкая (йога 1–2 р/нед)</option>
-          <option value="1.55">Средняя (йога 3–4 р/нед)</option>
-          <option value="1.75">Высокая (ежедневная активность)</option>
-        </select>
-      </div>
-      <div>
-        <label>Цель</label>
-        <select id="goal">
-          <option value="0.9">Мягкое снижение веса</option>
-          <option value="1">Баланс и энергия</option>
-          <option value="1.05">Поддержка тонуса</option>
-        </select>
-      </div>
-    </div>
-
-    <button type="button" onclick="calc()">Рассчитать</button>
-
-    <div class="result" id="calories"></div>
-    <p class="muted" id="macros"></p>
+<div class="card">
+<h2>Персональный расчёт</h2>
+<div class="grid">
+  <div><label>Вес (кг)</label><input id="weight" type="number"></div>
+  <div><label>Рост (см)</label><input id="height" type="number"></div>
+  <div><label>Возраст</label><input id="age" type="number"></div>
+  <div>
+    <label>Пол</label>
+    <select id="gender">
+      <option value="female">Женский</option>
+      <option value="male">Мужской</option>
+    </select>
   </div>
+  <div>
+    <label>Активность</label>
+    <select id="activity">
+      <option value="1.35">Йога 1–2 раза в неделю</option>
+      <option value="1.55">Йога 3–4 раза в неделю</option>
+      <option value="1.75">Ежедневная активность</option>
+    </select>
+  </div>
+  <div>
+    <label>Цель</label>
+    <select id="goal">
+      <option value="1">Баланс и энергия</option>
+      <option value="0.9">Мягкое снижение</option>
+      <option value="1.05">Поддержка</option>
+    </select>
+  </div>
+</div>
 
-  <!-- МЕНЮ -->
-  <details class="section">
-    <summary>📅 Примерное меню на 7 дней (баланс энергии)</summary>
+<button onclick="calc()">Рассчитать</button>
+<div class="result" id="calories"></div>
+<p class="muted" id="macros"></p>
+</div>
 
-    <p class="muted">
-      Это ориентир. Порции корректируйте под свою норму калорий,
-      рассчитанную выше. Неделя повторяется 4 раза = меню на месяц.
-    </p>
+<div class="card">
+<h2>Меню из того, что есть</h2>
+<p class="muted">
+Загрузите фото или напишите продукты — приложение составит меню.
+</p>
 
-    <div class="menu-buttons">
-      <button type="button" onclick="showDay(1)">День 1</button>
-      <button type="button" onclick="showDay(2)">День 2</button>
-      <button type="button" onclick="showDay(3)">День 3</button>
-      <button type="button" onclick="showDay(4)">День 4</button>
-      <button type="button" onclick="showDay(5)">День 5</button>
-      <button type="button" onclick="showDay(6)">День 6</button>
-      <button type="button" onclick="showDay(7)">День 7</button>
-    </div>
+<input type="file" accept="image/*">
+<label>Продукты (через запятую)</label>
+<textarea id="products" placeholder="яйца, творог, овсянка, овощи"></textarea>
 
-    <div id="d1" class="day">
-      <b>День 1</b><br>
-      Завтрак: овсянка, яблоко, орехи (~350 ккал)<br>
-      Обед: курица, гречка, овощи (~450 ккал)<br>
-      Перекус: йогурт, ягоды (~200 ккал)<br>
-      Ужин: рыба, овощи (~350 ккал)
-    </div>
+<button class="secondary" onclick="makeMenu()">Составить меню</button>
+<div id="menu" class="menu-block" style="display:none"></div>
+</div>
 
-    <div id="d2" class="day">
-      <b>День 2</b><br>
-      Завтрак: омлет, тост, овощи<br>
-      Обед: индейка, рис, овощи<br>
-      Перекус: творог<br>
-      Ужин: омлет с овощами
-    </div>
-
-    <div id="d3" class="day">
-      <b>День 3</b><br>
-      Завтрак: йогурт, мюсли, банан<br>
-      Обед: рыба, картофель, салат<br>
-      Перекус: фрукты, орехи<br>
-      Ужин: творог, ягоды
-    </div>
-
-    <div id="d4" class="day">
-      <b>День 4</b><br>
-      Завтрак: овсянка, груша<br>
-      Обед: курица, булгур, овощи<br>
-      Перекус: йогурт<br>
-      Ужин: яйца, овощи
-    </div>
-
-    <div id="d5" class="day">
-      <b>День 5</b><br>
-      Завтрак: яйца, тост<br>
-      Обед: чечевица, рис, овощи<br>
-      Перекус: творог<br>
-      Ужин: рыба, салат
-    </div>
-
-    <div id="d6" class="day">
-      <b>День 6</b><br>
-      Завтрак: йогурт, орехи<br>
-      Обед: индейка, картофель<br>
-      Перекус: фрукты<br>
-      Ужин: омлет
-    </div>
-
-    <div id="d7" class="day">
-      <b>День 7</b><br>
-      Завтрак: овсянка, ягоды<br>
-      Обед: курица, гречка<br>
-      Перекус: йогурт<br>
-      Ужин: рыба, овощи
-    </div>
-  </details>
-
-  <p class="muted">
-    ⚠️ Калькулятор носит информационный характер и не заменяет консультацию врача.
-  </p>
+<p class="muted">
+⚠️ Приложение носит ознакомительный характер.
+</p>
 
 </div>
 
 <script>
 function calc(){
-  const weightEl  = document.getElementById("weight");
-  const heightEl  = document.getElementById("height");
-  const ageEl     = document.getElementById("age");
-  const genderEl  = document.getElementById("gender");
-  const actEl     = document.getElementById("activity");
-  const goalEl    = document.getElementById("goal");
-
-  const caloriesOut = document.getElementById("calories");
-  const macrosOut   = document.getElementById("macros");
-
-  const w = parseFloat((weightEl.value || "").replace(",", "."));
-  const h = parseFloat((heightEl.value || "").replace(",", "."));
-  const a = parseInt(ageEl.value || "", 10);
-
-  if (!Number.isFinite(w) || !Number.isFinite(h) || !Number.isFinite(a)) {
-    alert("Пожалуйста, заполните вес, рост и возраст.");
-    return;
-  }
-
-  const gender = genderEl.value;
-  const act  = parseFloat(actEl.value);
-  const goal = parseFloat(goalEl.value);
-
-  // Формула Миффлина–Сан Жеора
-  const bmr = (gender === "male")
-    ? (10*w + 6.25*h - 5*a + 5)
-    : (10*w + 6.25*h - 5*a - 161);
-
-  const calories = Math.round(bmr * act * goal);
-
-  // БЖУ (мягкие ориентиры)
-  const protein = Math.round(w * 1.3);
-  const fat     = Math.round(w * 0.9);
-  const carbs   = Math.max(0, Math.round((calories - (protein*4 + fat*9)) / 4));
-
-  caloriesOut.textContent = "Норма калорий: " + calories + " ккал/день";
-  macrosOut.textContent   = "БЖУ: белки " + protein + " г • жиры " + fat + " г • углеводы " + carbs + " г";
+  let w=+weight.value,h=+height.value,a=+age.value;
+  if(!w||!h||!a){alert("Заполните все поля");return;}
+  let g=gender.value,act=+activity.value,goal=+goal.value;
+  let bmr=g==="male"?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161;
+  let cal=Math.round(bmr*act*goal);
+  let p=Math.round(w*1.3),f=Math.round(w*0.9);
+  let c=Math.round((cal-(p*4+f*9))/4);
+  calories.innerText="Потребность: "+cal+" ккал/день";
+  macros.innerText="БЖУ: белки "+p+" г • жиры "+f+" г • углеводы "+c+" г";
 }
-
-function showDay(n){
-  for(let i=1;i<=7;i++){
-    const el = document.getElementById("d"+i);
-    if (el) el.style.display = "none";
-  }
-  const current = document.getElementById("d"+n);
-  if (current) current.style.display = "block";
+function makeMenu(){
+  let list=products.value.trim();
+  if(!list){alert("Введите продукты");return;}
+  menu.style.display="block";
+  menu.innerHTML=
+  "<b>Пример меню на день</b><br><br>"+
+  "<b>Завтрак:</b> блюдо из "+list+" (~400 ккал)<br>"+
+  "<b>Обед:</b> блюдо из "+list+" (~500 ккал)<br>"+
+  "<b>Перекус:</b> лёгкий вариант (~300 ккал)<br>"+
+  "<b>Ужин:</b> мягкий приём пищи (~350 ккал)<br><br>"+
+  "<i>Можно использовать как шаблон на неделю.</i>";
 }
-
-// При открытии сразу показываем День 1, чтобы не было "пусто"
-document.addEventListener("DOMContentLoaded", () => {
-  showDay(1);
-});
 </script>
 
 </body>
 </html>
-
-
