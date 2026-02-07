@@ -11,9 +11,10 @@
   --card:#ffffff;
   --green:#6fbf8a;
   --green-dark:#2f6f4f;
-  --text:#222;
-  --muted:#666;
+  --text:#1f1f1f;
+  --muted:#6a6a6a;
   --radius:18px;
+  --line:#e9e9e9;
 }
 *{box-sizing:border-box}
 body{
@@ -22,48 +23,93 @@ body{
   background:var(--bg);
   color:var(--text);
 }
-.wrap{
-  max-width:980px;
-  margin:auto;
-  padding:24px;
-}
+.wrap{max-width:980px;margin:auto;padding:24px}
 h1{margin:0 0 6px;font-size:34px}
-.subtitle{color:var(--muted);margin-bottom:28px}
+.subtitle{color:var(--muted);margin:0 0 20px}
 .card{
   background:var(--card);
   border-radius:var(--radius);
-  padding:26px;
-  margin-bottom:26px;
-  box-shadow:0 8px 30px rgba(0,0,0,.06);
+  padding:22px;
+  margin:18px 0;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
 }
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-label{font-size:14px;color:var(--muted)}
-input,select,button{
+h2{margin:0 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}}
+label{font-size:13px;color:var(--muted)}
+input,select,textarea,button{
   width:100%;
   padding:12px 14px;
   border-radius:12px;
   border:1px solid #ddd;
   font-size:16px;
+  background:#fff;
 }
+textarea{min-height:84px;resize:vertical}
 button{
+  border:none;
   background:var(--green);
   color:#fff;
-  border:none;
+  font-weight:700;
   font-size:18px;
   padding:16px;
-  margin-top:18px;
   cursor:pointer;
 }
 button:hover{background:var(--green-dark)}
-.result h3{margin-top:0}
-.kcal{font-size:22px;font-weight:600;margin:10px 0}
-.week{margin-top:14px}
-.week div{padding:8px 0;border-bottom:1px solid #eee}
-.muted{color:var(--muted)}
+button.secondary{
+  background:#e7f3ec;
+  color:var(--green-dark);
+}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+  color:#2a2a2a;
+}
+.pill.active{
+  border-color:var(--green);
+  box-shadow:0 6px 18px rgba(111,191,138,.22);
+}
+.hr{height:1px;background:var(--line);margin:16px 0}
+.kcal{font-size:22px;font-weight:800;margin:8px 0}
+.small{color:var(--muted);font-size:14px}
+.week{margin-top:10px}
+.day{
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  line-height:1.55;
+}
+.tag{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#f1f6f3;
+  color:#2f6f4f;
+  font-size:12px;
+  font-weight:700;
+  margin-left:6px;
+}
+.preview{
+  display:none;
+  margin-top:10px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  overflow:hidden;
+  background:#fafafa;
+}
+.preview img{width:100%;display:block;max-height:260px;object-fit:cover}
+.warn{
+  padding:12px 14px;
+  border-radius:12px;
+  background:#fff7e6;
+  border:1px solid #ffe2a8;
+  color:#5b4500;
+  font-size:14px;
+}
 </style>
 </head>
 
@@ -71,120 +117,341 @@ button:hover{background:var(--green-dark)}
 <div class="wrap">
 
 <h1>🥗 Меню из холодильника</h1>
-<div class="subtitle">Мягкий расчёт питания для женщин, практикующих йогу</div>
+<p class="subtitle">Вау-прототип: суточная норма + меню на неделю + “умное меню” из ваших продуктов (ввод или фото)</p>
 
+<!-- 1) РАСЧЁТ -->
 <div class="card">
-<h2>Персональный расчёт</h2>
+  <h2>Персональный расчёт</h2>
+  <div class="grid">
+    <div>
+      <label>Вес (кг)</label>
+      <input id="weight" type="number" inputmode="decimal" placeholder="например, 68">
+    </div>
+    <div>
+      <label>Рост (см)</label>
+      <input id="height" type="number" inputmode="decimal" placeholder="например, 168">
+    </div>
+    <div>
+      <label>Возраст</label>
+      <input id="age" type="number" inputmode="numeric" placeholder="например, 37">
+    </div>
+    <div>
+      <label>Пол</label>
+      <select id="gender">
+        <option value="female">Женский</option>
+        <option value="male">Мужской</option>
+      </select>
+    </div>
+    <div>
+      <label>Активность</label>
+      <select id="activity">
+        <option value="1.2">Йога 1 раз в неделю</option>
+        <option value="1.3">Йога 2–3 раза в неделю</option>
+        <option value="1.45">Йога 4+ раза в неделю</option>
+      </select>
+    </div>
+    <div>
+      <label>Цель</label>
+      <select id="goal">
+        <option value="0.9">Мягкое снижение веса</option>
+        <option value="1">Баланс и энергия</option>
+        <option value="1.05">Поддержка формы</option>
+      </select>
+    </div>
+  </div>
 
-<div class="grid">
-  <div>
-    <label>Вес (кг)</label>
-    <input id="weight" type="number">
-  </div>
-  <div>
-    <label>Рост (см)</label>
-    <input id="height" type="number">
-  </div>
-  <div>
-    <label>Возраст</label>
-    <input id="age" type="number">
-  </div>
-  <div>
-    <label>Пол</label>
-    <select id="gender">
-      <option value="female">Женский</option>
-      <option value="male">Мужской</option>
-    </select>
-  </div>
-  <div>
-    <label>Активность</label>
-    <select id="activity">
-      <option value="1.2">Йога 1–2 раза в неделю</option>
-      <option value="1.35">Йога 2–3 раза в неделю</option>
-      <option value="1.5">Активная практика</option>
-    </select>
-  </div>
-  <div>
-    <label>Цель</label>
-    <select id="goal">
-      <option value="0.9">Мягкое снижение веса</option>
-      <option value="1">Баланс и энергия</option>
-      <option value="1.05">Поддержка формы</option>
-    </select>
+  <button id="btnCalc" type="button">Рассчитать</button>
+
+  <div id="calcOut" style="display:none;margin-top:14px">
+    <div class="kcal" id="dailyKcal"></div>
+    <div class="small" id="splitKcal"></div>
+    <div class="hr"></div>
+    <div class="small"><b>Ориентир БЖУ</b>: <span id="macros"></span></div>
   </div>
 </div>
 
-<button onclick="calc()">Рассчитать</button>
+<!-- 2) МЕНЮ НА НЕДЕЛЮ -->
+<div class="card" id="weekCard" style="display:none">
+  <h2>Меню на неделю (вау-план)</h2>
+  <div class="small">Собрано под вашу суточную норму и цель. Ниже — 7 дней, с идеями блюд и порциями (примерно).</div>
+  <div class="week" id="weekOut"></div>
 </div>
 
-<div id="result" class="card result" style="display:none"></div>
-
+<!-- 3) УМНОЕ МЕНЮ ИЗ ПРОДУКТОВ: ВВОД ИЛИ ФОТО -->
 <div class="card">
-<h2>Умное меню из того, что есть</h2>
-<label>Продукты (через запятую)</label>
-<input id="products" placeholder="яйца, творог, овощи, овсянка">
-<button onclick="smartMenu()">Составить меню</button>
-<div id="smart" class="week muted"></div>
+  <h2>Умное меню из того, что есть</h2>
+
+  <div class="row" style="margin-bottom:12px">
+    <div class="pill active" id="tabList">Ввести список</div>
+    <div class="pill" id="tabPhoto">Загрузить фото</div>
+  </div>
+
+  <!-- Вариант: список -->
+  <div id="panelList">
+    <label>Продукты (через запятую)</label>
+    <input id="productsList" placeholder="яйца, творог, овощи, овсянка, курица">
+    <button class="secondary" id="btnSmartList" type="button">Составить меню из списка</button>
+  </div>
+
+  <!-- Вариант: фото -->
+  <div id="panelPhoto" style="display:none">
+    <div class="warn">
+      Важно: это прототип без AI-распознавания. Поэтому сценарий такой:
+      <b>загружаете фото → видите превью → коротко подписываете, что на фото</b> (это быстрее, чем печатать всё с нуля).
+    </div>
+    <div style="margin-top:12px">
+      <label>Загрузить фото холодильника / продуктов</label>
+      <input id="photo" type="file" accept="image/*">
+      <div class="preview" id="previewBox"><img id="previewImg" alt="preview"></div>
+    </div>
+    <div style="margin-top:12px">
+      <label>Что на фото (кратко, через запятую)</label>
+      <input id="productsFromPhoto" placeholder="например: яйца, молоко, творог, огурцы, курица">
+      <button class="secondary" id="btnSmartPhoto" type="button">Составить меню по фото</button>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+  <div id="smartOut" class="week"></div>
 </div>
+
+<p class="small">⚠️ Прототип носит ознакомительный характер и не заменяет консультацию специалиста.</p>
 
 </div>
 
 <script>
+/* ===== Безопасные ссылки на элементы (чтобы кнопки не “ломались”) ===== */
+const $ = (id) => document.getElementById(id);
+
+const el = {
+  weight: $("weight"),
+  height: $("height"),
+  age: $("age"),
+  gender: $("gender"),
+  activity: $("activity"),
+  goal: $("goal"),
+  btnCalc: $("btnCalc"),
+  calcOut: $("calcOut"),
+  dailyKcal: $("dailyKcal"),
+  splitKcal: $("splitKcal"),
+  macros: $("macros"),
+  weekCard: $("weekCard"),
+  weekOut: $("weekOut"),
+
+  tabList: $("tabList"),
+  tabPhoto: $("tabPhoto"),
+  panelList: $("panelList"),
+  panelPhoto: $("panelPhoto"),
+
+  productsList: $("productsList"),
+  btnSmartList: $("btnSmartList"),
+
+  photo: $("photo"),
+  previewBox: $("previewBox"),
+  previewImg: $("previewImg"),
+  productsFromPhoto: $("productsFromPhoto"),
+  btnSmartPhoto: $("btnSmartPhoto"),
+
+  smartOut: $("smartOut"),
+};
+
+let lastDailyKcal = 1800; // запасной вариант, если расчёт ещё не сделали
+
+/* ===== Расчёт калорий ===== */
 function calc(){
-  let w=+weight.value,h=+height.value,a=+age.value;
-  if(!w||!h||!a){alert("Заполните все поля");return;}
+  const w = Number(el.weight.value);
+  const h = Number(el.height.value);
+  const a = Number(el.age.value);
 
-  let g=gender.value;
-  let act=+activity.value;
-  let goal=+goal.value;
+  if(!w || !h || !a){
+    alert("Заполните вес, рост и возраст");
+    return;
+  }
 
-  let bmr = g==="female"
-    ? 10*w+6.25*h-5*a-161
-    : 10*w+6.25*h-5*a+5;
+  const g = el.gender.value;
+  const act = Number(el.activity.value);
+  const goal = Number(el.goal.value);
 
-  let kcal = Math.round(bmr*act*goal);
+  const bmr = (g === "female")
+    ? (10*w + 6.25*h - 5*a - 161)
+    : (10*w + 6.25*h - 5*a + 5);
 
-  let b=Math.round(kcal*0.3);
-  let l=Math.round(kcal*0.35);
-  let s=Math.round(kcal*0.15);
-  let d=Math.round(kcal*0.2);
+  const kcal = Math.round(bmr * act * goal);
+  lastDailyKcal = kcal;
 
-  let days=["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
-  let weekHTML="";
-  days.forEach(day=>{
-    weekHTML+=`<div><b>${day}</b><br>
-    Завтрак ~${b} ккал · Обед ~${l} · Перекус ~${s} · Ужин ~${d}</div>`;
-  });
+  // БЖУ (мягко, ориентир)
+  const p = Math.round(w * 1.4);     // белок
+  const f = Math.round(w * 0.9);     // жир
+  const c = Math.max(0, Math.round((kcal - (p*4 + f*9))/4)); // углеводы
 
-  result.style.display="block";
-  result.innerHTML=`
-    <h3>Ваша комфортная норма</h3>
-    <div class="kcal">${kcal} ккал / день</div>
-    <div class="muted">Подходит для йоги и мягкого снижения веса</div>
+  // распределение по приёмам
+  const b = Math.round(kcal*0.30);
+  const l = Math.round(kcal*0.35);
+  const s = Math.round(kcal*0.15);
+  const d = kcal - b - l - s;
 
-    <h3>Распределение</h3>
-    Завтрак: ${b} ккал<br>
-    Обед: ${l} ккал<br>
-    Перекус: ${s} ккал<br>
-    Ужин: ${d} ккал
+  el.dailyKcal.textContent = `Суточная норма: ${kcal} ккал`;
+  el.splitKcal.innerHTML = `
+    <b>Пример распределения:</b><br>
+    Завтрак: ~30% (${b} ккал)<br>
+    Обед: ~35% (${l} ккал)<br>
+    Перекус: ~15% (${s} ккал)<br>
+    Ужин: ~20% (${d} ккал)
+  `;
+  el.macros.textContent = `белки ${p} г • жиры ${f} г • углеводы ${c} г`;
+  el.calcOut.style.display = "block";
 
-    <h3>Меню на неделю</h3>
-    <div class="week">${weekHTML}</div>
+  renderWeekMenu(kcal, {b,l,s,d});
+}
+
+/* ===== “Вау” меню на неделю ===== */
+function renderWeekMenu(kcal, split){
+  const days = ["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
+
+  // простая база блюд (без фанатизма, но презентабельно)
+  const breakfasts = [
+    "Овсянка + ягоды + йогурт",
+    "Творог + груша/яблоко + орехи",
+    "Омлет из 2 яиц + овощи",
+    "Гречка + яйцо + овощи",
+  ];
+  const lunches = [
+    "Курица/индейка + крупа + салат",
+    "Рыба + картофель/рис + овощи",
+    "Тушёные овощи + белок (курица/тофу)",
+    "Суп + цельнозерновой хлеб + салат",
+  ];
+  const snacks = [
+    "Творог или йогурт",
+    "Фрукт + горсть орехов",
+    "Хумус + овощи",
+    "Кефир/ряженка",
+  ];
+  const dinners = [
+    "Рыба/курица + овощи",
+    "Творог + ягоды (если поздно)",
+    "Тушёные овощи + белок",
+    "Салат + белок + оливковое масло",
+  ];
+
+  function portionHint(mealKcal, meal){
+    // приблизительные порции для “вау”: понятные граммы
+    // (очень грубо, но выглядит как продукт)
+    if(meal.includes("Творог")) return `Порция: творог 180–220 г (≈ ${mealKcal} ккал)`;
+    if(meal.includes("Овсянка")) return `Порция: овсянка 60–70 г сухой + йогурт 150 г (≈ ${mealKcal} ккал)`;
+    if(meal.includes("Омлет")) return `Порция: 2 яйца + овощи 250–300 г (≈ ${mealKcal} ккал)`;
+    if(meal.includes("Курица") || meal.includes("индейка")) return `Порция: белок 140–170 г + гарнир 150–200 г (≈ ${mealKcal} ккал)`;
+    if(meal.includes("Рыба")) return `Порция: рыба 160–200 г + овощи 250 г (≈ ${mealKcal} ккал)`;
+    return `Порция: под ${mealKcal} ккал`;
+  }
+
+  let html = "";
+  for(let i=0;i<7;i++){
+    const b = breakfasts[i % breakfasts.length];
+    const l = lunches[i % lunches.length];
+    const s = snacks[i % snacks.length];
+    const d = dinners[i % dinners.length];
+
+    html += `
+      <div class="day">
+        <b>${days[i]}</b> <span class="tag">${kcal} ккал/день</span><br>
+        <b>Завтрак</b> (${split.b} ккал): ${b}<br><span class="small">${portionHint(split.b,b)}</span><br>
+        <b>Обед</b> (${split.l} ккал): ${l}<br><span class="small">${portionHint(split.l,l)}</span><br>
+        <b>Перекус</b> (${split.s} ккал): ${s}<br><span class="small">${portionHint(split.s,s)}</span><br>
+        <b>Ужин</b> (${split.d} ккал): ${d}<br><span class="small">${portionHint(split.d,d)}</span>
+      </div>
+    `;
+  }
+
+  el.weekOut.innerHTML = html;
+  el.weekCard.style.display = "block";
+}
+
+/* ===== Умное меню из продуктов: список/фото ===== */
+function normalizeList(text){
+  return text
+    .split(",")
+    .map(s=>s.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function buildSmartMenu(rawText){
+  const items = normalizeList(rawText);
+  if(items.length === 0){
+    el.smartOut.innerHTML = "<span class='small'>Введите продукты, чтобы собрать меню.</span>";
+    return;
+  }
+
+  // очень простая “логика под продукты”: подставляем шаблоны
+  const has = (word) => items.some(x=>x.includes(word));
+  const pick = (arr) => arr[Math.floor(Math.random()*arr.length)];
+
+  const breakfast = has("овся") ? "Овсянка на воде/молоке + фрукт" :
+                   has("твор") ? "Творог + фрукт + 1 ч.л. мёда/ягоды" :
+                   has("яйц") ? "Омлет/яйца + овощи" :
+                   "Каша/йогурт + фрукт";
+
+  const lunch = has("кур") || has("индей") ? "Курица/индейка + гарнир + салат" :
+                has("рыб") ? "Рыба + овощи + гарнир" :
+                "Суп/рагу + салат";
+
+  const snack = has("кеф") || has("йогур") ? "Кефир/йогурт + фрукт" :
+                has("орех") ? "Фрукт + горсть орехов" :
+                "Фрукт или творог";
+
+  const dinner = has("рыб") ? "Рыба + овощи" :
+                 has("твор") ? "Творог + ягоды (если поздно)" :
+                 "Овощи + белок";
+
+  const kcal = lastDailyKcal;
+  const b = Math.round(kcal*0.30);
+  const l = Math.round(kcal*0.35);
+  const s = Math.round(kcal*0.15);
+  const d = kcal - b - l - s;
+
+  el.smartOut.innerHTML = `
+    <div class="small"><b>Ваши продукты:</b> ${items.join(", ")}</div>
+    <div class="hr"></div>
+    <div class="day" style="border-bottom:none;padding-bottom:0">
+      <b>Меню из того, что есть</b> <span class="tag">${kcal} ккал/день</span><br>
+      <b>Завтрак</b> (${b} ккал): ${breakfast}<br>
+      <b>Обед</b> (${l} ккал): ${lunch}<br>
+      <b>Перекус</b> (${s} ккал): ${snack}<br>
+      <b>Ужин</b> (${d} ккал): ${dinner}<br><br>
+      <span class="small"><i>Это прототип: он делает умный подбор по списку/подписи к фото. Если нужно авто-распознавание фото — подключим AI-модуль.</i></span>
+    </div>
   `;
 }
 
-function smartMenu(){
-  let list=products.value.trim();
-  if(!list){alert("Введите продукты");return;}
-  smart.innerHTML=`
-    <b>Пример на день:</b><br>
-    Завтрак: блюдо из ${list}<br>
-    Обед: сытное блюдо из ${list}<br>
-    Перекус: лёгкий вариант из ${list}<br>
-    Ужин: мягкий приём пищи из ${list}<br><br>
-    <i>Меню адаптируется под ритм жизни и практику йоги</i>
-  `;
+/* ===== Табы ===== */
+function setTab(mode){
+  const isList = mode === "list";
+  el.tabList.classList.toggle("active", isList);
+  el.tabPhoto.classList.toggle("active", !isList);
+  el.panelList.style.display = isList ? "block" : "none";
+  el.panelPhoto.style.display = isList ? "none" : "block";
+  el.smartOut.innerHTML = "";
 }
+
+/* ===== Превью фото ===== */
+el.photo.addEventListener("change", (e)=>{
+  const file = e.target.files && e.target.files[0];
+  if(!file){ el.previewBox.style.display="none"; return; }
+  const url = URL.createObjectURL(file);
+  el.previewImg.src = url;
+  el.previewBox.style.display = "block";
+});
+
+/* ===== Подключаем кнопки ===== */
+el.btnCalc.addEventListener("click", calc);
+el.btnSmartList.addEventListener("click", ()=>buildSmartMenu(el.productsList.value));
+el.btnSmartPhoto.addEventListener("click", ()=>buildSmartMenu(el.productsFromPhoto.value));
+
+el.tabList.addEventListener("click", ()=>setTab("list"));
+el.tabPhoto.addEventListener("click", ()=>setTab("photo"));
+
+// старт
+setTab("list");
 </script>
 
 </body>
