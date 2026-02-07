@@ -1,232 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Йога-баланс — умное меню</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Йога-баланс — умное меню</title>
 
-<style>
-:root{
-  --bg:#f7f9f7;
-  --card:#ffffff;
-  --green:#6fbf8a;
-  --green-dark:#2f4f3f;
-  --text:#2b2b2b;
-  --muted:#6b6b6b;
-  --radius:18px;
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-.wrap{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-
-h1{
-  margin:0 0 6px;
-  color:var(--green-dark);
-}
-
-h2{margin-top:0}
-
-p{margin:6px 0}
-.muted{color:var(--muted);font-size:14px}
-
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:18px;
-  margin-top:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.05);
-}
-
-label{
-  font-size:14px;
-  color:var(--muted);
-}
-
-input,select,textarea{
-  width:100%;
-  margin-top:6px;
-  padding:10px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  font-size:15px;
-}
-
-textarea{min-height:70px}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-@media(max-width:700px){
-  .grid{grid-template-columns:1fr}
-}
-
-button{
-  margin-top:16px;
-  padding:14px;
-  width:100%;
-  border:none;
-  border-radius:16px;
-  background:var(--green);
-  color:white;
-  font-size:16px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-button.secondary{
-  background:#e8f3ec;
-  color:var(--green-dark);
-}
-
-.result{
-  margin-top:14px;
-  font-size:18px;
-  font-weight:600;
-  color:var(--green-dark);
-}
-
-.menu{
-  margin-top:12px;
-  padding:14px;
-  border-radius:14px;
-  background:#f1f6f3;
-  line-height:1.7;
-}
-</style>
+  <style>
+    body{
+      font-family: system-ui, Arial, sans-serif;
+      background:#f6f7f6;
+      margin:0;
+      padding:20px;
+      color:#2b2b2b;
+    }
+    .wrap{
+      max-width:900px;
+      margin:auto;
+    }
+    h1{margin-bottom:6px}
+    h2{margin-top:30px}
+    .card{
+      background:#fff;
+      border-radius:16px;
+      padding:20px;
+      margin-bottom:20px;
+      box-shadow:0 6px 20px rgba(0,0,0,.05);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    label{font-size:14px}
+    input,select{
+      width:100%;
+      padding:10px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      font-size:15px;
+    }
+    button{
+      width:100%;
+      margin-top:20px;
+      padding:14px;
+      border-radius:14px;
+      border:none;
+      background:#6fbf8a;
+      color:#fff;
+      font-size:17px;
+      cursor:pointer;
+    }
+    .result{
+      margin-top:20px;
+      font-size:16px;
+      line-height:1.5;
+    }
+  </style>
 </head>
 
 <body>
 <div class="wrap">
 
-<h1>🌿 Меню из холодильника</h1>
-<p class="muted">
-Мягкий помощник по питанию и энергии для женщин 30–45 лет, практикующих йогу.
-</p>
+  <h1>🥗 Меню из холодильника</h1>
+  <p>Мягкий расчёт питания для женщин, практикующих йогу</p>
 
-<!-- КАЛЬКУЛЯТОР -->
-<div class="card">
-<h2>Персональный расчёт</h2>
+  <div class="card">
+    <h2>Персональный расчёт</h2>
 
-<div class="grid">
-  <div>
-    <label>Вес (кг)</label>
-    <input id="weight" type="number">
+    <div class="grid">
+      <div>
+        <label>Вес (кг)</label>
+        <input id="weight" type="number">
+      </div>
+
+      <div>
+        <label>Рост (см)</label>
+        <input id="height" type="number">
+      </div>
+
+      <div>
+        <label>Возраст</label>
+        <input id="age" type="number">
+      </div>
+
+      <div>
+        <label>Пол</label>
+        <select id="gender">
+          <option value="female">Женский</option>
+          <option value="male">Мужской</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Активность</label>
+        <select id="activity">
+          <option value="1.2">Йога 1 раз в неделю</option>
+          <option value="1.35">Йога 2–3 раза</option>
+          <option value="1.5">Йога + движение</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Цель</label>
+        <select id="goal">
+          <option value="0.9">Мягкое снижение веса</option>
+          <option value="1">Баланс и энергия</option>
+          <option value="1.05">Поддержка формы</option>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="calc()">Рассчитать</button>
+
+    <div id="daily" class="result"></div>
   </div>
-  <div>
-    <label>Рост (см)</label>
-    <input id="height" type="number">
-  </div>
-  <div>
-    <label>Возраст</label>
-    <input id="age" type="number">
-  </div>
-  <div>
-    <label>Пол</label>
-    <select id="gender">
-      <option value="female">Женский</option>
-      <option value="male">Мужской</option>
-    </select>
-  </div>
-  <div>
-    <label>Активность</label>
-    <select id="activity">
-      <option value="1.35">Йога 1–2 раза в неделю</option>
-      <option value="1.55">Йога 3–4 раза в неделю</option>
-      <option value="1.75">Ежедневная активность</option>
-    </select>
-  </div>
-  <div>
-    <label>Цель</label>
-    <select id="goal">
-      <option value="0.9">Мягкое снижение веса</option>
-      <option value="1">Баланс и энергия</option>
-      <option value="1.05">Поддержка формы</option>
-    </select>
-  </div>
-</div>
-
-<button onclick="calc()">Рассчитать</button>
-
-<div id="daily" class="result"></div>
-<div id="dayMenu" class="menu" style="display:none"></div>
-</div>
-
-<!-- МЕНЮ ИЗ ПРОДУКТОВ -->
-<div class="card">
-<h2>Умное меню из продуктов</h2>
-<p class="muted">Напишите, что есть дома — приложение соберёт пример меню.</p>
-
-<textarea id="products" placeholder="яйца, творог, овсянка, овощи"></textarea>
-<button class="secondary" onclick="makeMenu()">Составить меню</button>
-
-<div id="smartMenu" class="menu" style="display:none"></div>
-</div>
-
-<p class="muted">
-⚠️ Приложение носит ознакомительный характер и не заменяет консультацию специалиста.
-</p>
 
 </div>
 
 <script>
-function calc(){
-  let w=+weight.value,h=+height.value,a=+age.value;
-  if(!w||!h||!a){alert("Заполните все поля");return;}
+function calc() {
 
-  let g=gender.value;
-  let act=+activity.value;
-  let goal=+goal.value;
+  const weight = document.getElementById("weight");
+  const height = document.getElementById("height");
+  const age = document.getElementById("age");
+  const gender = document.getElementById("gender");
+  const activity = document.getElementById("activity");
+  const goal = document.getElementById("goal");
+  const daily = document.getElementById("daily");
 
-  let bmr=g==="male"
-    ?10*w+6.25*h-5*a+5
-    :10*w+6.25*h-5*a-161;
+  if (!weight.value || !height.value || !age.value) {
+    alert("Заполните вес, рост и возраст");
+    return;
+  }
 
-  let calories=Math.round(bmr*act*goal);
+  let w = Number(weight.value);
+  let h = Number(height.value);
+  let a = Number(age.value);
 
-  let breakfast=Math.round(calories*0.25);
-  let lunch=Math.round(calories*0.35);
-  let snack=Math.round(calories*0.15);
-  let dinner=calories-breakfast-lunch-snack;
+  let bmr =
+    gender.value === "female"
+      ? 10*w + 6.25*h - 5*a - 161
+      : 10*w + 6.25*h - 5*a + 5;
 
-  daily.innerText="Суточная потребность: "+calories+" ккал";
+  let calories = Math.round(bmr * Number(activity.value) * Number(goal.value));
 
-  dayMenu.style.display="block";
-  dayMenu.innerHTML=
-    "<b>Пример меню на день</b><br><br>"+
-    "🥣 Завтрак — "+breakfast+" ккал<br>"+
-    "🍲 Обед — "+lunch+" ккал<br>"+
-    "🍏 Перекус — "+snack+" ккал<br>"+
-    "🥗 Ужин — "+dinner+" ккал<br><br>"+
-    "<i>Этот день — базовый шаблон. Его можно повторять 5–7 дней, "+
-    "меняя продукты внутри. Подходит как основа на неделю и месяц.</i>";
-}
-
-function makeMenu(){
-  let list=products.value.trim();
-  if(!list){alert("Введите продукты");return;}
-
-  smartMenu.style.display="block";
-  smartMenu.innerHTML=
-    "<b>Меню из того, что есть</b><br><br>"+
-    "Завтрак: блюдо из "+list+"<br>"+
-    "Обед: основное блюдо из "+list+"<br>"+
-    "Перекус: лёгкий вариант из "+list+"<br>"+
-    "Ужин: мягкий приём пищи из "+list+"<br><br>"+
-    "<i>Меню адаптируется под ваш ритм и практику йоги.</i>";
+  daily.innerHTML =
+    "<b>Суточная норма:</b> " + calories + " ккал<br>" +
+    "<br><b>Пример распределения:</b><br>" +
+    "Завтрак: ~30% (" + Math.round(calories*0.3) + " ккал)<br>" +
+    "Обед: ~35% (" + Math.round(calories*0.35) + " ккал)<br>" +
+    "Перекус: ~15% (" + Math.round(calories*0.15) + " ккал)<br>" +
+    "Ужин: ~20% (" + Math.round(calories*0.2) + " ккал)<br>" +
+    "<br><i>Подходит для йоги и мягкого снижения веса</i>";
 }
 </script>
 
