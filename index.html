@@ -3,108 +3,108 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Питание для энергии и мягкого снижения веса</title>
+<title>Йога-баланс — умное меню</title>
 
 <style>
 :root{
-  --bg:#f7faf7;
+  --bg:#f7f9f7;
   --card:#ffffff;
   --green:#6fbf8a;
   --green-dark:#2f4f3f;
   --text:#2b2b2b;
   --muted:#6b6b6b;
-  --border:#e6eee8;
   --radius:18px;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   background:var(--bg);
   color:var(--text);
 }
+
 .wrap{
-  max-width:920px;
+  max-width:900px;
   margin:auto;
-  padding:22px;
+  padding:20px;
 }
+
 h1{
   margin:0 0 6px;
   color:var(--green-dark);
 }
-h2{
-  margin:0 0 10px;
-  color:var(--green-dark);
-  font-size:20px;
-}
-.muted{
-  color:var(--muted);
-  font-size:14px;
-}
+
+h2{margin-top:0}
+
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:14px}
+
 .card{
   background:var(--card);
-  border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:20px;
-  margin-top:16px;
+  padding:18px;
+  margin-top:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.05);
 }
+
+label{
+  font-size:14px;
+  color:var(--muted);
+}
+
+input,select,textarea{
+  width:100%;
+  margin-top:6px;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  font-size:15px;
+}
+
+textarea{min-height:70px}
+
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:14px;
 }
-@media(max-width:760px){
+@media(max-width:700px){
   .grid{grid-template-columns:1fr}
 }
-label{
-  font-size:13px;
-  color:var(--muted);
-}
-input,select{
-  width:100%;
-  padding:12px;
-  margin-top:6px;
-  border-radius:14px;
-  border:1px solid var(--border);
-}
+
 button{
-  width:100%;
-  margin-top:14px;
+  margin-top:16px;
   padding:14px;
-  border-radius:16px;
+  width:100%;
   border:none;
+  border-radius:16px;
   background:var(--green);
   color:white;
+  font-size:16px;
   font-weight:600;
   cursor:pointer;
 }
-.menu{
-  margin-top:16px;
-  padding:18px;
-  border-radius:16px;
-  background:#f1f7f3;
-  line-height:1.65;
-  font-size:15px;
-}
-.menu h3{
-  margin:18px 0 6px;
+
+button.secondary{
+  background:#e8f3ec;
   color:var(--green-dark);
-  font-size:16px;
 }
-.kcal{
-  font-weight:600;
-  color:#2f4f3f;
-}
-.note{
+
+.result{
   margin-top:14px;
-  font-size:13px;
-  color:var(--muted);
-}
-.total{
-  margin-top:10px;
-  font-size:15px;
+  font-size:18px;
   font-weight:600;
-  color:#2f4f3f;
+  color:var(--green-dark);
+}
+
+.menu{
+  margin-top:12px;
+  padding:14px;
+  border-radius:14px;
+  background:#f1f6f3;
+  line-height:1.7;
 }
 </style>
 </head>
@@ -112,104 +112,122 @@ button{
 <body>
 <div class="wrap">
 
-<h1>🌿 Питание для мягкого снижения веса</h1>
+<h1>🌿 Меню из холодильника</h1>
 <p class="muted">
-Подходит, если у тебя йога 1 раз в неделю и часто не хватает энергии.
+Мягкий помощник по питанию и энергии для женщин 30–45 лет, практикующих йогу.
 </p>
 
+<!-- КАЛЬКУЛЯТОР -->
 <div class="card">
 <h2>Персональный расчёт</h2>
 
-<form id="calcForm">
-  <div class="grid">
-    <div>
-      <label>Вес (кг)</label>
-      <input id="weight" type="number" required>
-    </div>
-    <div>
-      <label>Рост (см)</label>
-      <input id="height" type="number" required>
-    </div>
-    <div>
-      <label>Возраст</label>
-      <input id="age" type="number" required>
-    </div>
-    <div>
-      <label>Пол</label>
-      <select id="gender">
-        <option value="female">Женский</option>
-        <option value="male">Мужской</option>
-      </select>
-    </div>
+<div class="grid">
+  <div>
+    <label>Вес (кг)</label>
+    <input id="weight" type="number">
   </div>
-
-  <button type="submit">Показать мой план на сегодня</button>
-</form>
-
-<div id="result" style="display:none">
-
-  <div class="menu">
-
-    <div class="total" id="dailyCalories"></div>
-
-    <p>
-      <b>Твой мягкий план питания на сегодня</b><br>
-      Он поддерживает энергию и помогает снижать вес без стресса и жёстких ограничений.
-    </p>
-
-    <h3>🍳 Завтрак <span class="kcal">≈ 420 ккал</span></h3>
-    • Овсяные хлопья (сухие) — 60 г<br>
-    • Творог 5% — 100 г<br>
-    • Ягоды — 50 г<br>
-    • Орехи — 10 г
-
-    <h3>🥗 Обед <span class="kcal">≈ 480 ккал</span></h3>
-    • Куриное филе (готовое) — 120 г<br>
-    • Гречка (сухая) — 70 г<br>
-    • Овощи — 200 г<br>
-    • Оливковое масло — 1 ч. л.
-
-    <h3>🍏 Перекус <span class="kcal">≈ 270 ккал</span></h3>
-    • Йогурт натуральный — 150 г<br>
-    • Фрукт (яблоко / груша) — 1 шт.<br>
-    • Орехи — 10 г
-
-    <h3>🥣 Ужин <span class="kcal">≈ 380 ккал</span></h3>
-    • Рыба (хек / треска / лосось) — 120 г<br>
-    • Овощи — 200 г<br>
-    • Оливковое масло — 1 ч. л.
-
-    <div class="note">
-      Если после йоги сильный голод — добавь 20–30 г крупы в обед.<br>
-      Если вечером нет аппетита — уменьши порцию, это нормально.<br>
-      Вода — ориентир 1,5–2 л в день, без фанатизма.
-    </div>
-
+  <div>
+    <label>Рост (см)</label>
+    <input id="height" type="number">
+  </div>
+  <div>
+    <label>Возраст</label>
+    <input id="age" type="number">
+  </div>
+  <div>
+    <label>Пол</label>
+    <select id="gender">
+      <option value="female">Женский</option>
+      <option value="male">Мужской</option>
+    </select>
+  </div>
+  <div>
+    <label>Активность</label>
+    <select id="activity">
+      <option value="1.35">Йога 1–2 раза в неделю</option>
+      <option value="1.55">Йога 3–4 раза в неделю</option>
+      <option value="1.75">Ежедневная активность</option>
+    </select>
+  </div>
+  <div>
+    <label>Цель</label>
+    <select id="goal">
+      <option value="0.9">Мягкое снижение веса</option>
+      <option value="1">Баланс и энергия</option>
+      <option value="1.05">Поддержка формы</option>
+    </select>
   </div>
 </div>
+
+<button onclick="calc()">Рассчитать</button>
+
+<div id="daily" class="result"></div>
+<div id="dayMenu" class="menu" style="display:none"></div>
+</div>
+
+<!-- МЕНЮ ИЗ ПРОДУКТОВ -->
+<div class="card">
+<h2>Умное меню из продуктов</h2>
+<p class="muted">Напишите, что есть дома — приложение соберёт пример меню.</p>
+
+<textarea id="products" placeholder="яйца, творог, овсянка, овощи"></textarea>
+<button class="secondary" onclick="makeMenu()">Составить меню</button>
+
+<div id="smartMenu" class="menu" style="display:none"></div>
+</div>
+
+<p class="muted">
+⚠️ Приложение носит ознакомительный характер и не заменяет консультацию специалиста.
+</p>
 
 </div>
 
 <script>
-document.getElementById("calcForm").addEventListener("submit", function(e){
-  e.preventDefault();
+function calc(){
+  let w=+weight.value,h=+height.value,a=+age.value;
+  if(!w||!h||!a){alert("Заполните все поля");return;}
 
-  let w = +weight.value;
-  let h = +height.value;
-  let a = +age.value;
-  let g = gender.value;
+  let g=gender.value;
+  let act=+activity.value;
+  let goal=+goal.value;
 
-  let bmr = g === "male"
-    ? 10*w + 6.25*h - 5*a + 5
-    : 10*w + 6.25*h - 5*a - 161;
+  let bmr=g==="male"
+    ?10*w+6.25*h-5*a+5
+    :10*w+6.25*h-5*a-161;
 
-  let daily = Math.round(bmr * 1.35 * 0.9); // йога 1 раз + мягкое снижение
+  let calories=Math.round(bmr*act*goal);
 
-  document.getElementById("dailyCalories").innerText =
-    "Твоя ориентировочная суточная норма: ≈ " + daily + " ккал";
+  let breakfast=Math.round(calories*0.25);
+  let lunch=Math.round(calories*0.35);
+  let snack=Math.round(calories*0.15);
+  let dinner=calories-breakfast-lunch-snack;
 
-  document.getElementById("result").style.display = "block";
-});
+  daily.innerText="Суточная потребность: "+calories+" ккал";
+
+  dayMenu.style.display="block";
+  dayMenu.innerHTML=
+    "<b>Пример меню на день</b><br><br>"+
+    "🥣 Завтрак — "+breakfast+" ккал<br>"+
+    "🍲 Обед — "+lunch+" ккал<br>"+
+    "🍏 Перекус — "+snack+" ккал<br>"+
+    "🥗 Ужин — "+dinner+" ккал<br><br>"+
+    "<i>Этот день — базовый шаблон. Его можно повторять 5–7 дней, "+
+    "меняя продукты внутри. Подходит как основа на неделю и месяц.</i>";
+}
+
+function makeMenu(){
+  let list=products.value.trim();
+  if(!list){alert("Введите продукты");return;}
+
+  smartMenu.style.display="block";
+  smartMenu.innerHTML=
+    "<b>Меню из того, что есть</b><br><br>"+
+    "Завтрак: блюдо из "+list+"<br>"+
+    "Обед: основное блюдо из "+list+"<br>"+
+    "Перекус: лёгкий вариант из "+list+"<br>"+
+    "Ужин: мягкий приём пищи из "+list+"<br><br>"+
+    "<i>Меню адаптируется под ваш ритм и практику йоги.</i>";
+}
 </script>
 
 </body>
