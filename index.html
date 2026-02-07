@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Йога-баланс — питание</title>
+<title>Питание для энергии и мягкого снижения веса</title>
 
 <style>
 :root{
@@ -24,20 +24,29 @@ body{
   color:var(--text);
 }
 .wrap{
-  max-width:980px;
+  max-width:920px;
   margin:auto;
   padding:22px;
 }
-h1{margin:0 0 6px;color:var(--green-dark)}
-h2{margin:0 0 10px;color:var(--green-dark);font-size:18px}
-.muted{color:var(--muted);font-size:14px}
+h1{
+  margin:0 0 6px;
+  color:var(--green-dark);
+}
+h2{
+  margin:0 0 10px;
+  color:var(--green-dark);
+  font-size:20px;
+}
+.muted{
+  color:var(--muted);
+  font-size:14px;
+}
 .card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:18px;
+  padding:20px;
   margin-top:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,.04);
 }
 .grid{
   display:grid;
@@ -47,245 +56,137 @@ h2{margin:0 0 10px;color:var(--green-dark);font-size:18px}
 @media(max-width:760px){
   .grid{grid-template-columns:1fr}
 }
-label{font-size:13px;color:var(--muted)}
+label{
+  font-size:13px;
+  color:var(--muted);
+}
 input,select{
   width:100%;
   padding:12px;
   margin-top:6px;
   border-radius:14px;
   border:1px solid var(--border);
-  background:#fff;
 }
 button{
+  width:100%;
+  margin-top:14px;
   padding:14px;
   border-radius:16px;
   border:none;
-  cursor:pointer;
+  background:var(--green);
+  color:white;
   font-weight:600;
-}
-.btn-main{
-  width:100%;
-  background:var(--green);
-  color:white;
-  margin-top:14px;
-
-  /* железобетон: если где-то есть перекрытие */
-  position: relative;
-  z-index: 20;
-}
-.tabs{
-  display:flex;
-  gap:8px;
-  margin-top:14px;
-}
-.tabs button{
-  flex:1;
-  background:#eef6f1;
-  color:var(--green-dark);
-  position: relative;
-  z-index: 10;
-}
-.tabs button.active{
-  background:var(--green);
-  color:white;
+  cursor:pointer;
 }
 .menu{
-  margin-top:14px;
-  padding:14px;
-  border-radius:14px;
+  margin-top:16px;
+  padding:18px;
+  border-radius:16px;
   background:#f1f7f3;
-  line-height:1.6;
-  font-size:14px;
+  line-height:1.65;
+  font-size:15px;
 }
-.day{margin-bottom:12px}
-.week{
-  margin-bottom:18px;
-  padding-bottom:12px;
-  border-bottom:1px dashed #cfe7d7;
+.menu h3{
+  margin:18px 0 6px;
+  color:var(--green-dark);
+  font-size:16px;
 }
 .kcal{
-  margin-top:10px;
-  font-size:16px;
-  font-weight:700;
-  color:var(--green-dark);
+  font-weight:600;
+  color:#2f4f3f;
+}
+.note{
+  margin-top:14px;
+  font-size:13px;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
 <div class="wrap">
-  <h1>🌿 Питание для баланса и йоги</h1>
-  <p class="muted">Мягкий ориентир, а не диета</p>
 
-  <!-- РАСЧЁТ -->
-  <div class="card">
-    <h2>Персональный расчёт</h2>
+<h1>🌿 Питание для мягкого снижения веса</h1>
+<p class="muted">
+Подходит, если у тебя йога 1 раз в неделю и часто не хватает энергии.
+</p>
 
-    <!-- ВАЖНО: tabs НЕ внутри формы -->
-    <form id="calcForm" novalidate>
-      <div class="grid">
-        <div>
-          <label for="weight">Вес (кг)</label>
-          <input id="weight" type="number" inputmode="decimal" required>
-        </div>
-        <div>
-          <label for="height">Рост (см)</label>
-          <input id="height" type="number" inputmode="numeric" required>
-        </div>
-        <div>
-          <label for="age">Возраст</label>
-          <input id="age" type="number" inputmode="numeric" required>
-        </div>
-        <div>
-          <label for="gender">Пол</label>
-          <select id="gender">
-            <option value="female">Женский</option>
-            <option value="male">Мужской</option>
-          </select>
-        </div>
-        <div>
-          <label for="activity">Активность</label>
-          <select id="activity">
-            <option value="1.35">Йога 1–2 раза</option>
-            <option value="1.55">Йога 3–4 раза</option>
-            <option value="1.75">Ежедневно</option>
-          </select>
-        </div>
-        <div>
-          <label for="goal">Цель</label>
-          <select id="goal">
-            <option value="1">Баланс</option>
-            <option value="0.9">Мягкое снижение</option>
-            <option value="1.05">Поддержка</option>
-          </select>
-        </div>
-      </div>
+<div class="card">
+<h2>Персональный расчёт</h2>
 
-      <!-- Единственная submit-кнопка -->
-      <button class="btn-main" id="calcBtn" type="submit">Рассчитать</button>
-    </form>
+<form id="calcForm">
+  <div class="grid">
+    <div>
+      <label>Вес (кг)</label>
+      <input id="weight" type="number" required>
+    </div>
+    <div>
+      <label>Рост (см)</label>
+      <input id="height" type="number" required>
+    </div>
+    <div>
+      <label>Возраст</label>
+      <input id="age" type="number" required>
+    </div>
+    <div>
+      <label>Пол</label>
+      <select id="gender">
+        <option value="female">Женский</option>
+        <option value="male">Мужской</option>
+      </select>
+    </div>
+  </div>
 
-    <div id="result" style="display:none;margin-top:14px">
-      <div class="kcal" id="calories"></div>
+  <button type="submit">Показать мой план на сегодня</button>
+</form>
 
-      <div class="tabs" aria-label="переключатель меню">
-        <!-- ВАЖНО: type="button", чтобы не было submit -->
-        <button type="button" id="tab-day"  class="active">День</button>
-        <button type="button" id="tab-week">Неделя</button>
-        <button type="button" id="tab-month">Месяц</button>
-      </div>
+<div id="result" style="display:none">
 
-      <div id="menu" class="menu"></div>
+  <div class="menu">
+
+    <p>
+      <b>Твой мягкий план питания на сегодня</b><br>
+      Он поддерживает энергию и помогает снижать вес без стресса и жёстких ограничений.
+    </p>
+
+    <h3>🍳 Завтрак <span class="kcal">≈ 420 ккал</span></h3>
+    • Овсяные хлопья (сухие) — 60 г<br>
+    • Творог 5% — 100 г<br>
+    • Ягоды — 50 г<br>
+    • Орехи — 10 г
+
+    <h3>🥗 Обед <span class="kcal">≈ 480 ккал</span></h3>
+    • Куриное филе (готовое) — 120 г<br>
+    • Гречка (сухая) — 70 г<br>
+    • Овощи — 200 г<br>
+    • Оливковое масло — 1 ч. л.
+
+    <h3>🍏 Перекус <span class="kcal">≈ 270 ккал</span></h3>
+    • Йогурт натуральный — 150 г<br>
+    • Фрукт (яблоко / груша) — 1 шт.<br>
+    • Орехи — 10 г
+
+    <h3>🥣 Ужин <span class="kcal">≈ 380 ккал</span></h3>
+    • Рыба (хек / треска / лосось) — 120 г<br>
+    • Овощи — 200 г<br>
+    • Оливковое масло — 1 ч. л.
+
+    <div class="note">
+      Если после йоги сильный голод — добавь 20–30 г крупы в обед.<br>
+      Если вечером нет аппетита — уменьши порцию, это нормально.<br>
+      Вода — ориентир 1,5–2 л в день, без фанатизма.
     </div>
 
   </div>
 </div>
 
+</div>
+
 <script>
-(() => {
-  let mode = "day";
-
-  const baseDay = [
-    "🍽️ Завтрак: сложные углеводы + белок + фрукт/ягоды",
-    "🥗 Обед: овощи + источник белка + крупа/картофель",
-    "🍏 Перекус: кисломолочный продукт или фрукт + орехи",
-    "🥣 Ужин: лёгкий белок + овощи (без тяжести)"
-  ];
-
-  const swaps = {
-    carbs: ["овсянка", "гречка", "рис", "пшено", "булгур"],
-    protein: ["курица", "рыба", "яйца", "творог", "индейка", "чечевица"],
-    veg: ["овощи", "зелень", "салат", "брокколи", "огурцы-помидоры"],
-    fruit: ["яблоко", "банан", "ягоды", "груша"]
-  };
-
-  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-
-  function varyLine(line){
-    return line
-      .replace("сложные углеводы", pick(swaps.carbs))
-      .replace("белок", pick(swaps.protein))
-      .replace("овощи", pick(swaps.veg))
-      .replace("фрукт/ягоды", pick(swaps.fruit));
-  }
-
-  function renderMenu(){
-    const menuEl = document.getElementById("menu");
-    let html = "";
-
-    if(mode === "day"){
-      html += `<div class="day"><b>День</b><br>${baseDay.map(varyLine).join("<br>")}</div>`;
-    }
-
-    if(mode === "week"){
-      for(let i=1;i<=7;i++){
-        html += `<div class="day"><b>День ${i}</b><br>${baseDay.map(varyLine).join("<br>")}</div>`;
-      }
-    }
-
-    if(mode === "month"){
-      for(let w=1;w<=4;w++){
-        html += `<div class="week"><b>Неделя ${w}</b><br>`;
-        for(let d=1;d<=7;d++){
-          html += `<div class="day"><b>День ${d}:</b><br>${baseDay.map(varyLine).join("<br>")}</div>`;
-        }
-        html += `</div>`;
-      }
-    }
-
-    menuEl.innerHTML = html;
-  }
-
-  function setMode(m){
-    mode = m;
-    document.getElementById("tab-day").classList.toggle("active", m==="day");
-    document.getElementById("tab-week").classList.toggle("active", m==="week");
-    document.getElementById("tab-month").classList.toggle("active", m==="month");
-    renderMenu();
-  }
-
-  function calcBMR(w,h,a,gender){
-    return gender==="male"
-      ? 10*w + 6.25*h - 5*a + 5
-      : 10*w + 6.25*h - 5*a - 161;
-  }
-
-  function onSubmit(e){
-    e.preventDefault();
-
-    const w = Number(document.getElementById("weight").value);
-    const h = Number(document.getElementById("height").value);
-    const a = Number(document.getElementById("age").value);
-    const g = document.getElementById("gender").value;
-    const act = Number(document.getElementById("activity").value);
-    const goal = Number(document.getElementById("goal").value);
-
-    if(!w || !h || !a){
-      alert("Заполните вес, рост и возраст.");
-      return;
-    }
-
-    const bmr = calcBMR(w,h,a,g);
-    const cal = Math.round(bmr * act * goal);
-
-    document.getElementById("calories").innerText = `Ориентир: ${cal} ккал/день`;
-    document.getElementById("result").style.display = "block";
-
-    setMode("day");
-  }
-
-  // Подключаем обработчики после загрузки DOM
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("calcForm").addEventListener("submit", onSubmit);
-
-    document.getElementById("tab-day").addEventListener("click", () => setMode("day"));
-    document.getElementById("tab-week").addEventListener("click", () => setMode("week"));
-    document.getElementById("tab-month").addEventListener("click", () => setMode("month"));
-
-    // на всякий случай: если где-то перекрытия — принудительно разрешаем клики
-    document.getElementById("calcBtn").style.pointerEvents = "auto";
-  });
-})();
+document.getElementById("calcForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  document.getElementById("result").style.display = "block";
+});
 </script>
 
 </body>
