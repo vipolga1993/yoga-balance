@@ -1,101 +1,402 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Йога-баланс — меню из холодильника</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Йога-Баланс — меню из холодильника</title>
 
-<style>
-:root{
-  --bg:#f7f9f7;
-  --card:#ffffff;
-  --green:#6fbf8a;
-  --green-dark:#2f4f3f;
-  --text:#2b2b2b;
-  --muted:#6b6b6b;
-  --radius:18px;
-}
+  <style>
+    :root{
+      --bg:#f7faf7;
+      --card:#ffffff;
+      --green:#6fbf8a;
+      --green-dark:#2f4f3f;
+      --text:#232323;
+      --muted:#6b6b6b;
+      --border:#e6eee8;
+      --warn:#b42318;
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:22px;
+    }
+    .brand{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom:14px;
+    }
+    .brand h1{
+      margin:0;
+      font-size:30px;
+      line-height:1.1;
+      color:var(--green-dark);
+      letter-spacing:-0.2px;
+    }
+    .brand p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:18px;
+      margin-top:16px;
+      box-shadow:0 10px 25px rgba(0,0,0,.04);
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:20px;
+      color:var(--green-dark);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+    @media (max-width:760px){
+      .grid{grid-template-columns:1fr}
+    }
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#fff;
+      font-size:15px;
+      outline:none;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color:#cfe7d7;
+      box-shadow:0 0 0 4px rgba(111,191,138,.15);
+    }
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .btn{
+      width:100%;
+      border:none;
+      border-radius:16px;
+      padding:14px 14px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:16px;
+    }
+    .btn.primary{background:var(--green); color:#fff;}
+    .btn.primary:active{transform:translateY(1px);}
+    .btn.secondary{background:#eaf6ef; color:var(--green-dark);}
+    .btn.secondary:active{transform:translateY(1px);}
+    .hint{color:var(--muted); font-size:13px; margin-top:8px;}
+    .error{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(180,35,24,.25);
+      background:rgba(180,35,24,.06);
+      color:var(--warn);
+      font-size:14px;
+      display:none;
+    }
+    .out{
+      margin-top:12px;
+      display:none;
+    }
+    .pill{
+      display:inline-block;
+      margin:8px 8px 0 0;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#f3faf6;
+      font-size:14px;
+      color:var(--green-dark);
+      font-weight:700;
+    }
+    .out .line{
+      margin-top:10px;
+      padding:12px;
+      border-radius:14px;
+      background:#f1f7f3;
+      border:1px solid var(--border);
+      line-height:1.55;
+      font-size:14px;
+      color:#2a2a2a;
+    }
+    .split{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:14px;
+    }
+    @media(max-width:900px){
+      .split{grid-template-columns:1fr}
+    }
+    textarea{min-height:86px; resize:vertical;}
+    .footer-note{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:12px;
+    }
+  </style>
+</head>
 
-*{box-sizing:border-box}
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div style="font-size:28px;line-height:1">🌿</div>
+      <div>
+        <h1>Меню из холодильника</h1>
+        <p>Мягкий помощник по питанию и энергии для йоги. Без диет и давления.</p>
+      </div>
+    </div>
 
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
+    <!-- РАСЧЁТ -->
+    <div class="card">
+      <h2>Персональный расчёт</h2>
 
-.wrap{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
+      <!-- ВАЖНО: это форма. Кнопка всегда кликабельна, а submit мы перехватываем -->
+      <form id="calcForm" novalidate>
+        <div class="grid">
+          <div>
+            <label for="weight">Вес (кг)</label>
+            <input id="weight" type="number" inputmode="decimal" placeholder="например: 63" min="25" max="250" step="0.1" required />
+          </div>
+          <div>
+            <label for="height">Рост (см)</label>
+            <input id="height" type="number" inputmode="numeric" placeholder="например: 168" min="120" max="230" step="1" required />
+          </div>
 
-h1{
-  margin:0 0 8px;
-  font-size:26px;
-  color:var(--green-dark);
-}
+          <div>
+            <label for="age">Возраст</label>
+            <input id="age" type="number" inputmode="numeric" placeholder="например: 32" min="12" max="90" step="1" required />
+          </div>
 
-p{margin:6px 0}
-.muted{color:var(--muted);font-size:14px}
+          <div>
+            <label for="gender">Пол</label>
+            <select id="gender" required>
+              <option value="female">Женский</option>
+              <option value="male">Мужской</option>
+            </select>
+          </div>
 
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:18px;
-  margin-top:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.05);
-}
+          <div>
+            <label for="activity">Активность</label>
+            <select id="activity" required>
+              <option value="1.2">Минимальная (офис/мало шагов)</option>
+              <option value="1.35">Йога 1–2 раза в неделю</option>
+              <option value="1.55">Йога 3–4 раза в неделю</option>
+              <option value="1.75">Ежедневная активность</option>
+            </select>
+          </div>
 
-label{
-  font-size:14px;
-  color:var(--muted);
-}
+          <div>
+            <label for="goal">Цель</label>
+            <select id="goal" required>
+              <option value="maintain">Баланс и энергия</option>
+              <option value="loss">Мягкое снижение</option>
+              <option value="gain">Поддержка/набор</option>
+            </select>
+          </div>
+        </div>
 
-input, select, textarea{
-  width:100%;
-  margin-top:6px;
-  padding:10px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  font-size:15px;
-}
+        <div class="row" style="margin-top:14px">
+          <button class="btn primary" type="submit">Рассчитать</button>
+        </div>
 
-textarea{min-height:70px}
+        <div id="calcError" class="error"></div>
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-@media(max-width:700px){
-  .grid{grid-template-columns:1fr}
-}
+        <div id="calcOut" class="out">
+          <div>
+            <span id="kcalPill" class="pill"></span>
+            <span id="bmrPill" class="pill"></span>
+          </div>
 
-button{
-  margin-top:16px;
-  padding:14px;
-  width:100%;
-  border:none;
-  border-radius:16px;
-  background:var(--green);
-  color:white;
-  font-size:16px;
-  font-weight:600;
-  cursor:pointer;
+          <div class="line" id="macroLine"></div>
 
-  /* ВАЖНО — чтобы кнопка была кликабельна */
-  position: relative;
-  z-index: 10;
-}
+          <div class="split">
+            <div class="line" id="mealsLine"></div>
+            <div class="line" id="tipsLine"></div>
+          </div>
 
-button.secondary{
-  background:#e8f3ec;
-  color:var(--green-dark);
-}
+          <div class="footer-note">
+            ⚠️ Это ориентир. При заболеваниях, беременности, РПП или медицинских ограничениях лучше обсудить питание со специалистом.
+          </div>
+        </div>
+      </form>
+    </div>
 
-.result{
-  margin-top:12px;
-  font-size:18px;
-  font-weight:60
+    <!-- МЕНЮ ИЗ ПРОДУКТОВ (оставляю как было, потом улучшим) -->
+    <div class="card">
+      <h2>Меню из того, что есть</h2>
+      <p class="hint">Загрузите фото (для вас) и/или напишите продукты — приложение составит пример меню.</p>
+
+      <input id="photo" type="file" accept="image/*" />
+
+      <div style="margin-top:10px">
+        <label for="products">Продукты (через запятую)</label>
+        <textarea id="products" placeholder="например: яйца, творог, овсянка, яблоки, овощи"></textarea>
+      </div>
+
+      <button class="btn secondary" type="button" id="menuBtn">Составить меню</button>
+
+      <div id="menuBox" class="out" style="display:none">
+        <div class="line" id="menuText"></div>
+      </div>
+
+      <div class="footer-note">
+        Фото пока используется как “прикрепление для человека” (браузер не умеет сам распознавать продукты без отдельной AI-части). Дальше сделаем распознавание.
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  // ---------- утилиты ----------
+  function roundInt(x){ return Math.round(Number(x)); }
+  function clamp(x, a, b){ return Math.min(Math.max(x, a), b); }
+
+  function showError(msg){
+    const el = document.getElementById('calcError');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function hideError(){
+    const el = document.getElementById('calcError');
+    el.textContent = '';
+    el.style.display = 'none';
+  }
+  function showOut(){
+    document.getElementById('calcOut').style.display = 'block';
+  }
+
+  // ---------- расчёт ----------
+  function calcBMR({w, h, a, gender}){
+    // Mifflin-St Jeor
+    if (gender === 'male') return 10*w + 6.25*h - 5*a + 5;
+    return 10*w + 6.25*h - 5*a - 161;
+  }
+
+  function goalFactor(goal){
+    // мягкие коэффициенты
+    if (goal === 'loss') return 0.88;   // -12%
+    if (goal === 'gain') return 1.08;   // +8%
+    return 1.0;                         // поддержание
+  }
+
+  function calcMacros({calories, w, goal}){
+    // белок — чуть выше при снижении
+    const proteinPerKg = (goal === 'loss') ? 1.6 : 1.3;
+    const fatPerKg = 0.8;
+
+    let p = roundInt(w * proteinPerKg);  // граммы
+    let f = roundInt(w * fatPerKg);      // граммы
+
+    // углеводы — остаток
+    const calFromPF = p*4 + f*9;
+    let c = roundInt((calories - calFromPF)/4);
+
+    // защита от странных значений
+    c = clamp(c, 60, 600);
+
+    return {p,f,c};
+  }
+
+  function mealSplit(calories){
+    // 4 приёма — удобный базовый шаблон
+    const breakfast = roundInt(calories * 0.28);
+    const lunch     = roundInt(calories * 0.34);
+    const snack     = roundInt(calories * 0.16);
+    const dinner    = roundInt(calories * 0.22);
+    return {breakfast, lunch, snack, dinner};
+  }
+
+  // ---------- UI ----------
+  const form = document.getElementById('calcForm');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault(); // главное: не перезагружать страницу
+    hideError();
+
+    const w = Number(document.getElementById('weight').value);
+    const h = Number(document.getElementById('height').value);
+    const a = Number(document.getElementById('age').value);
+    const gender = document.getElementById('gender').value;
+    const activity = Number(document.getElementById('activity').value);
+    const goal = document.getElementById('goal').value;
+
+    // валидация простая и понятная
+    if (!w || !h || !a) return showError("Заполните вес, рост и возраст.");
+    if (w < 25 || w > 250) return showError("Проверьте вес: должно быть от 25 до 250 кг.");
+    if (h < 120 || h > 230) return showError("Проверьте рост: должно быть от 120 до 230 см.");
+    if (a < 12 || a > 90) return showError("Проверьте возраст: должно быть от 12 до 90 лет.");
+
+    const bmr = calcBMR({w, h, a, gender});
+    const cal = roundInt(bmr * activity * goalFactor(goal));
+
+    const macros = calcMacros({calories: cal, w, goal});
+    const split = mealSplit(cal);
+
+    // вывод
+    document.getElementById('kcalPill').textContent = `Ориентир: ${cal} ккал/день`;
+    document.getElementById('bmrPill').textContent  = `BMR: ${roundInt(bmr)} ккал`;
+
+    document.getElementById('macroLine').innerHTML =
+      `<b>БЖУ-ориентир:</b> белки ${macros.p} г • жиры ${macros.f} г • углеводы ${macros.c} г
+       <div class="hint">Если голодно — добавьте овощи/белок. Если тяжело на практике — чуть больше углеводов в завтрак/обед.</div>`;
+
+    document.getElementById('mealsLine').innerHTML =
+      `<b>Распределение по приёмам (пример):</b><br><br>
+       🍳 <b>Завтрак</b> ~ ${split.breakfast} ккал<br>
+       🍲 <b>Обед</b> ~ ${split.lunch} ккал<br>
+       🥛 <b>Перекус</b> ~ ${split.snack} ккал<br>
+       🥗 <b>Ужин</b> ~ ${split.dinner} ккал<br><br>
+       <span class="hint">Это не “закон”, а удобная структура. Можно переставлять местами под ваш график.</span>`;
+
+    const goalText = (goal==='loss') ? 'мягкое снижение' : (goal==='gain' ? 'поддержка/набор' : 'баланс');
+    document.getElementById('tipsLine').innerHTML =
+      `<b>Под вашу цель:</b><br><br>
+       • Цель: <b>${goalText}</b><br>
+       • Перед йогой: лёгкий углевод + вода (если нужно)<br>
+       • После: белок + немного углеводов<br><br>
+       <span class="hint">Дальше мы добавим “граммовки” порций (например: сколько творога на 300–400 ккал).</span>`;
+
+    showOut();
+  });
+
+  // ---------- меню из продуктов ----------
+  document.getElementById('menuBtn').addEventListener('click', () => {
+    const list = document.getElementById('products').value.trim();
+    if (!list){
+      alert("Напишите продукты через запятую (или хотя бы 3–4 продукта).");
+      return;
+    }
+    document.getElementById('menuBox').style.display = 'block';
+    document.getElementById('menuText').innerHTML =
+      `<b>Пример меню на день (как шаблон на неделю)</b><br><br>
+       <b>Завтрак:</b> блюдо из ${list} (ориентир 350–450 ккал)<br>
+       <b>Обед:</b> основное блюдо из ${list} (ориентир 450–600 ккал)<br>
+       <b>Перекус:</b> лёгкий вариант из ${list} (ориентир 200–350 ккал)<br>
+       <b>Ужин:</b> мягкий приём пищи из ${list} (ориентир 300–450 ккал)<br><br>
+       <span class="hint">Потом сделаем умнее: подставим конкретные блюда и граммовки.</span>`;
+  });
+</script>
+</body>
+</html>
