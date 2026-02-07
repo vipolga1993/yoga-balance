@@ -28,10 +28,8 @@ body{
   margin:auto;
   padding:22px;
 }
-h1{
-  margin:0 0 6px;
-  color:var(--green-dark);
-}
+h1{margin:0 0 6px;color:var(--green-dark)}
+h2{margin:0 0 10px;color:var(--green-dark);font-size:18px}
 .muted{color:var(--muted);font-size:14px}
 .card{
   background:var(--card);
@@ -39,6 +37,7 @@ h1{
   border-radius:var(--radius);
   padding:18px;
   margin-top:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.04);
 }
 .grid{
   display:grid;
@@ -55,6 +54,7 @@ input,select{
   margin-top:6px;
   border-radius:14px;
   border:1px solid var(--border);
+  background:#fff;
 }
 button{
   padding:14px;
@@ -68,16 +68,22 @@ button{
   background:var(--green);
   color:white;
   margin-top:14px;
+
+  /* железобетон: если где-то есть перекрытие */
+  position: relative;
+  z-index: 20;
 }
 .tabs{
   display:flex;
   gap:8px;
-  margin-top:16px;
+  margin-top:14px;
 }
 .tabs button{
   flex:1;
   background:#eef6f1;
   color:var(--green-dark);
+  position: relative;
+  z-index: 10;
 }
 .tabs button.active{
   background:var(--green);
@@ -91,143 +97,195 @@ button{
   line-height:1.6;
   font-size:14px;
 }
-.day{
-  margin-bottom:12px;
-}
+.day{margin-bottom:12px}
 .week{
   margin-bottom:18px;
   padding-bottom:12px;
   border-bottom:1px dashed #cfe7d7;
+}
+.kcal{
+  margin-top:10px;
+  font-size:16px;
+  font-weight:700;
+  color:var(--green-dark);
 }
 </style>
 </head>
 
 <body>
 <div class="wrap">
+  <h1>🌿 Питание для баланса и йоги</h1>
+  <p class="muted">Мягкий ориентир, а не диета</p>
 
-<h1>🌿 Питание для баланса и йоги</h1>
-<p class="muted">Мягкий ориентир, а не диета</p>
+  <!-- РАСЧЁТ -->
+  <div class="card">
+    <h2>Персональный расчёт</h2>
 
-<!-- РАСЧЁТ -->
-<div class="card">
-<h2>Персональный расчёт</h2>
+    <!-- ВАЖНО: tabs НЕ внутри формы -->
+    <form id="calcForm" novalidate>
+      <div class="grid">
+        <div>
+          <label for="weight">Вес (кг)</label>
+          <input id="weight" type="number" inputmode="decimal" required>
+        </div>
+        <div>
+          <label for="height">Рост (см)</label>
+          <input id="height" type="number" inputmode="numeric" required>
+        </div>
+        <div>
+          <label for="age">Возраст</label>
+          <input id="age" type="number" inputmode="numeric" required>
+        </div>
+        <div>
+          <label for="gender">Пол</label>
+          <select id="gender">
+            <option value="female">Женский</option>
+            <option value="male">Мужской</option>
+          </select>
+        </div>
+        <div>
+          <label for="activity">Активность</label>
+          <select id="activity">
+            <option value="1.35">Йога 1–2 раза</option>
+            <option value="1.55">Йога 3–4 раза</option>
+            <option value="1.75">Ежедневно</option>
+          </select>
+        </div>
+        <div>
+          <label for="goal">Цель</label>
+          <select id="goal">
+            <option value="1">Баланс</option>
+            <option value="0.9">Мягкое снижение</option>
+            <option value="1.05">Поддержка</option>
+          </select>
+        </div>
+      </div>
 
-<form id="calcForm">
-  <div class="grid">
-    <div><label>Вес (кг)</label><input id="weight" type="number" required></div>
-    <div><label>Рост (см)</label><input id="height" type="number" required></div>
-    <div><label>Возраст</label><input id="age" type="number" required></div>
-    <div>
-      <label>Пол</label>
-      <select id="gender">
-        <option value="female">Женский</option>
-        <option value="male">Мужской</option>
-      </select>
+      <!-- Единственная submit-кнопка -->
+      <button class="btn-main" id="calcBtn" type="submit">Рассчитать</button>
+    </form>
+
+    <div id="result" style="display:none;margin-top:14px">
+      <div class="kcal" id="calories"></div>
+
+      <div class="tabs" aria-label="переключатель меню">
+        <!-- ВАЖНО: type="button", чтобы не было submit -->
+        <button type="button" id="tab-day"  class="active">День</button>
+        <button type="button" id="tab-week">Неделя</button>
+        <button type="button" id="tab-month">Месяц</button>
+      </div>
+
+      <div id="menu" class="menu"></div>
     </div>
-    <div>
-      <label>Активность</label>
-      <select id="activity">
-        <option value="1.35">Йога 1–2 раза</option>
-        <option value="1.55">Йога 3–4 раза</option>
-        <option value="1.75">Ежедневно</option>
-      </select>
-    </div>
-    <div>
-      <label>Цель</label>
-      <select id="goal">
-        <option value="1">Баланс</option>
-        <option value="0.9">Мягкое снижение</option>
-        <option value="1.05">Поддержка</option>
-      </select>
-    </div>
+
   </div>
-
-  <button class="btn-main" type="submit">Рассчитать</button>
-</form>
-
-<div id="result" style="display:none;margin-top:14px">
-  <div id="calories"></div>
-
-  <div class="tabs">
-    <button onclick="setMode('day')" id="tab-day" class="active">День</button>
-    <button onclick="setMode('week')" id="tab-week">Неделя</button>
-    <button onclick="setMode('month')" id="tab-month">Месяц</button>
-  </div>
-
-  <div id="menu" class="menu"></div>
-</div>
-</div>
-
 </div>
 
 <script>
-let mode = "day";
+(() => {
+  let mode = "day";
 
-const baseDay = [
-  "Завтрак: овсянка + фрукты + белок",
-  "Обед: овощи + источник белка + крупа",
-  "Перекус: кисломолочный продукт / фрукты",
-  "Ужин: лёгкий белок + овощи"
-];
-
-function variations(day){
-  const v = [
-    "овсянка","гречка","рис","пшено",
-    "курица","рыба","яйца","творог",
-    "овощи","зелень","фрукты"
+  const baseDay = [
+    "🍽️ Завтрак: сложные углеводы + белок + фрукт/ягоды",
+    "🥗 Обед: овощи + источник белка + крупа/картофель",
+    "🍏 Перекус: кисломолочный продукт или фрукт + орехи",
+    "🥣 Ужин: лёгкий белок + овощи (без тяжести)"
   ];
-  return day.map(d => d.replace("белок", v[Math.floor(Math.random()*v.length)]));
-}
 
-function renderMenu(){
-  let html = "";
+  const swaps = {
+    carbs: ["овсянка", "гречка", "рис", "пшено", "булгур"],
+    protein: ["курица", "рыба", "яйца", "творог", "индейка", "чечевица"],
+    veg: ["овощи", "зелень", "салат", "брокколи", "огурцы-помидоры"],
+    fruit: ["яблоко", "банан", "ягоды", "груша"]
+  };
 
-  if(mode==="day"){
-    html += `<div class="day"><b>День</b><br>` + baseDay.join("<br>") + "</div>";
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  function varyLine(line){
+    return line
+      .replace("сложные углеводы", pick(swaps.carbs))
+      .replace("белок", pick(swaps.protein))
+      .replace("овощи", pick(swaps.veg))
+      .replace("фрукт/ягоды", pick(swaps.fruit));
   }
 
-  if(mode==="week"){
-    for(let i=1;i<=7;i++){
-      html += `<div class="day"><b>День ${i}</b><br>` +
-        variations(baseDay).join("<br>") + "</div>";
+  function renderMenu(){
+    const menuEl = document.getElementById("menu");
+    let html = "";
+
+    if(mode === "day"){
+      html += `<div class="day"><b>День</b><br>${baseDay.map(varyLine).join("<br>")}</div>`;
     }
-  }
 
-  if(mode==="month"){
-    for(let w=1;w<=4;w++){
-      html += `<div class="week"><b>Неделя ${w}</b><br>`;
-      for(let d=1;d<=7;d++){
-        html += `<div class="day">День ${d}: ` +
-          variations(baseDay)[0] + "</div>";
+    if(mode === "week"){
+      for(let i=1;i<=7;i++){
+        html += `<div class="day"><b>День ${i}</b><br>${baseDay.map(varyLine).join("<br>")}</div>`;
       }
-      html += `</div>`;
     }
+
+    if(mode === "month"){
+      for(let w=1;w<=4;w++){
+        html += `<div class="week"><b>Неделя ${w}</b><br>`;
+        for(let d=1;d<=7;d++){
+          html += `<div class="day"><b>День ${d}:</b><br>${baseDay.map(varyLine).join("<br>")}</div>`;
+        }
+        html += `</div>`;
+      }
+    }
+
+    menuEl.innerHTML = html;
   }
 
-  document.getElementById("menu").innerHTML = html;
-}
+  function setMode(m){
+    mode = m;
+    document.getElementById("tab-day").classList.toggle("active", m==="day");
+    document.getElementById("tab-week").classList.toggle("active", m==="week");
+    document.getElementById("tab-month").classList.toggle("active", m==="month");
+    renderMenu();
+  }
 
-function setMode(m){
-  mode = m;
-  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
-  document.getElementById("tab-"+m).classList.add("active");
-  renderMenu();
-}
+  function calcBMR(w,h,a,gender){
+    return gender==="male"
+      ? 10*w + 6.25*h - 5*a + 5
+      : 10*w + 6.25*h - 5*a - 161;
+  }
 
-document.getElementById("calcForm").addEventListener("submit", e=>{
-  e.preventDefault();
+  function onSubmit(e){
+    e.preventDefault();
 
-  let w=+weight.value,h=+height.value,a=+age.value;
-  let g=gender.value,act=+activity.value,goal=+goal.value;
-  let bmr=g==="male"?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161;
-  let cal=Math.round(bmr*act*goal);
+    const w = Number(document.getElementById("weight").value);
+    const h = Number(document.getElementById("height").value);
+    const a = Number(document.getElementById("age").value);
+    const g = document.getElementById("gender").value;
+    const act = Number(document.getElementById("activity").value);
+    const goal = Number(document.getElementById("goal").value);
 
-  document.getElementById("calories").innerHTML =
-    `<b>Ориентир:</b> ${cal} ккал/день`;
+    if(!w || !h || !a){
+      alert("Заполните вес, рост и возраст.");
+      return;
+    }
 
-  document.getElementById("result").style.display="block";
-  setMode("day");
-});
+    const bmr = calcBMR(w,h,a,g);
+    const cal = Math.round(bmr * act * goal);
+
+    document.getElementById("calories").innerText = `Ориентир: ${cal} ккал/день`;
+    document.getElementById("result").style.display = "block";
+
+    setMode("day");
+  }
+
+  // Подключаем обработчики после загрузки DOM
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("calcForm").addEventListener("submit", onSubmit);
+
+    document.getElementById("tab-day").addEventListener("click", () => setMode("day"));
+    document.getElementById("tab-week").addEventListener("click", () => setMode("week"));
+    document.getElementById("tab-month").addEventListener("click", () => setMode("month"));
+
+    // на всякий случай: если где-то перекрытия — принудительно разрешаем клики
+    document.getElementById("calcBtn").style.pointerEvents = "auto";
+  });
+})();
 </script>
 
 </body>
