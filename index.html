@@ -100,6 +100,12 @@ button{
   font-size:13px;
   color:var(--muted);
 }
+.total{
+  margin-top:10px;
+  font-size:15px;
+  font-weight:600;
+  color:#2f4f3f;
+}
 </style>
 </head>
 
@@ -144,6 +150,8 @@ button{
 
   <div class="menu">
 
+    <div class="total" id="dailyCalories"></div>
+
     <p>
       <b>Твой мягкий план питания на сегодня</b><br>
       Он поддерживает энергию и помогает снижать вес без стресса и жёстких ограничений.
@@ -185,6 +193,21 @@ button{
 <script>
 document.getElementById("calcForm").addEventListener("submit", function(e){
   e.preventDefault();
+
+  let w = +weight.value;
+  let h = +height.value;
+  let a = +age.value;
+  let g = gender.value;
+
+  let bmr = g === "male"
+    ? 10*w + 6.25*h - 5*a + 5
+    : 10*w + 6.25*h - 5*a - 161;
+
+  let daily = Math.round(bmr * 1.35 * 0.9); // йога 1 раз + мягкое снижение
+
+  document.getElementById("dailyCalories").innerText =
+    "Твоя ориентировочная суточная норма: ≈ " + daily + " ккал";
+
   document.getElementById("result").style.display = "block";
 });
 </script>
