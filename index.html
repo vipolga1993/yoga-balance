@@ -1,177 +1,644 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Меню из холодильника</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Меню из холодильника</title>
 
-<style>
-:root{
-  --bg:#f7fbf8;
-  --card:#ffffff;
-  --green:#6fbf8a;
-  --green-dark:#2f4f3f;
-  --text:#24312b;
-  --muted:#6b7c73;
-  --radius:18px;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-.wrap{
-  max-width:980px;
-  margin:auto;
-  padding:24px;
-}
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:28px;
-  margin-bottom:24px;
-  box-shadow:0 8px 24px rgba(0,0,0,.06);
-}
-h1{margin:0 0 6px;font-size:30px;color:var(--green-dark)}
-h2{margin-top:0}
-p.muted{color:var(--muted)}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:16px;
-}
-label{font-size:14px;color:var(--muted)}
-input,select,textarea,button{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:1px solid #e5ece8;
-  font-size:16px;
-}
-button{
-  background:var(--green);
-  color:#fff;
-  border:none;
-  cursor:pointer;
-  font-size:18px;
-}
-button:hover{opacity:.95}
-.result{
-  background:#f0faf4;
-  border-radius:14px;
-  padding:18px;
-  margin-top:16px;
-}
-.hidden{display:none}
-.day{
-  margin-top:12px;
-  border-top:1px dashed #cfe5d7;
-  padding-top:12px;
-}
-.copy{
-  background:#e9f6ef;
-  color:var(--green-dark);
-  margin-top:12px;
-}
-</style>
+  <style>
+    :root{
+      --bg:#f4f8f5;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --text:#111827;
+      --green:#66b887;
+      --green2:#2f7a57;
+      --line:#e6efe9;
+      --soft:#eef7f1;
+      --shadow:0 18px 40px rgba(17,24,39,.08);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: radial-gradient(1200px 800px at 20% 0%, #edf7f0 0%, var(--bg) 55%, #f7fbf8 100%);
+      color:var(--text);
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:26px 18px 70px}
+    .brand{
+      display:flex;align-items:center;gap:14px;margin-bottom:18px
+    }
+    .logo{
+      width:42px;height:42px;border-radius:14px;
+      background:linear-gradient(145deg,#e7f6ee,#ffffff);
+      box-shadow:0 10px 24px rgba(17,24,39,.10);
+      display:grid;place-items:center;font-size:22px
+    }
+    h1{margin:0;font-size:44px;letter-spacing:-.02em;color:#1f513b}
+    .sub{margin:8px 0 0;color:var(--muted);font-size:18px;line-height:1.4}
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+      border:1px solid rgba(230,239,233,.65);
+      margin-top:18px;
+    }
+    .card h2{margin:0 0 14px;font-size:34px;letter-spacing:-.02em}
+    .hint{color:var(--muted);margin:0 0 18px;font-size:16px;line-height:1.5}
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    @media (max-width:760px){
+      h1{font-size:34px}
+      .card h2{font-size:28px}
+      .grid{grid-template-columns:1fr}
+    }
+
+    .field{
+      background:#fbfdfc;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:12px 14px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      transition:.15s ease;
+    }
+    .field:focus-within{border-color:#cfe7d8; box-shadow:0 0 0 4px rgba(102,184,135,.14)}
+    .icon{
+      width:34px;height:34px;border-radius:14px;
+      background:linear-gradient(145deg,#eaf7f0,#ffffff);
+      border:1px solid #dcefe3;
+      display:grid;place-items:center;
+      color:#1f513b;
+      flex:0 0 auto;
+      font-size:18px;
+    }
+    label{display:block;font-size:14px;color:var(--muted);margin:0 0 6px}
+    .field .ctrl{flex:1}
+    input,select,textarea{
+      width:100%;
+      border:none;
+      outline:none;
+      background:transparent;
+      font-size:18px;
+      color:var(--text);
+      padding:2px 0;
+    }
+    textarea{min-height:84px;resize:vertical}
+
+    .btnRow{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+    .btn{
+      appearance:none;border:none;cursor:pointer;
+      padding:16px 18px;border-radius:18px;
+      font-size:18px;font-weight:700;
+      transition:.15s ease;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .btnPrimary{
+      width:100%;
+      background:linear-gradient(135deg,var(--green),#7bd1a0);
+      color:#fff;
+      box-shadow:0 14px 28px rgba(102,184,135,.25);
+    }
+    .btnPrimary:hover{transform:translateY(-1px)}
+    .btnGhost{
+      background:linear-gradient(135deg,#eaf7f0,#ffffff);
+      border:1px solid #dcefe3;
+      color:#1f513b;
+    }
+    .btnGhost:hover{transform:translateY(-1px)}
+    .btnSmall{padding:12px 14px;font-size:16px;border-radius:16px;font-weight:700}
+
+    .panel{
+      background:linear-gradient(180deg,#f0faf4,#ffffff);
+      border:1px solid #dcefe3;
+      border-radius:20px;
+      padding:18px;
+      margin-top:14px;
+    }
+
+    .kpi{
+      display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+      font-size:18px;
+    }
+    .kpi strong{font-size:22px}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid #dcefe3;background:#ffffff;
+      color:#1f513b;font-weight:700;font-size:14px;
+    }
+
+    .list{
+      margin:12px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .li{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid #eef3ef;
+      background:#fff;
+    }
+    .li .dot{
+      width:28px;height:28px;border-radius:12px;
+      background:linear-gradient(145deg,#eaf7f0,#ffffff);
+      border:1px solid #dcefe3;
+      display:grid;place-items:center;
+      flex:0 0 auto;
+      font-size:16px;
+    }
+    .li b{display:block;margin-bottom:2px}
+    .muted{color:var(--muted)}
+    .hr{height:1px;background:var(--line);margin:16px 0}
+
+    /* Week accordion */
+    details.day{
+      border:1px solid #e7efe9;
+      background:#fff;
+      border-radius:18px;
+      padding:10px 12px;
+    }
+    details.day + details.day{margin-top:10px}
+    details.day summary{
+      cursor:pointer;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      font-weight:800;
+      font-size:18px;
+      padding:10px 10px;
+    }
+    details.day summary::-webkit-details-marker{display:none}
+    .sumRight{color:#1f513b;font-weight:700;font-size:14px}
+    .dayBody{padding:6px 10px 12px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+    .chip{
+      background:var(--soft);
+      border:1px solid #dcefe3;
+      color:#1f513b;
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%);
+      background:#0f172a;
+      color:#fff;
+      padding:12px 14px;
+      border-radius:14px;
+      opacity:0;
+      pointer-events:none;
+      transition:.2s ease;
+      font-weight:700;
+      box-shadow:0 14px 28px rgba(0,0,0,.18);
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-2px)}
+    .footerNote{margin-top:14px;color:#7b8794;font-size:13px}
+  </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo">🥗</div>
+      <div>
+        <h1>Меню из холодильника</h1>
+        <div class="sub">Мягкий расчёт питания для женщин, практикующих йогу</div>
+      </div>
+    </div>
 
-<h1>🥗 Меню из холодильника</h1>
-<p class="muted">Мягкий расчёт питания для женщин, практикующих йогу</p>
+    <!-- CALC -->
+    <section class="card" id="calcCard">
+      <h2>Персональный расчёт</h2>
+      <p class="hint">Заполните параметры — и получите суточную норму, распределение по приёмам пищи и удобную структуру меню.</p>
 
-<div class="card">
-<h2>Персональный расчёт</h2>
+      <form id="calcForm">
+        <div class="grid">
+          <div>
+            <label>Вес (кг)</label>
+            <div class="field">
+              <div class="icon">⚖️</div>
+              <div class="ctrl"><input id="weight" type="number" inputmode="numeric" min="30" max="250" placeholder="например, 68"></div>
+            </div>
+          </div>
 
-<div class="grid">
-<div>
-<label>Вес (кг)</label>
-<input id="weight" type="number">
-</div>
-<div>
-<label>Рост (см)</label>
-<input id="height" type="number">
-</div>
-<div>
-<label>Возраст</label>
-<input id="age" type="number">
-</div>
-<div>
-<label>Пол</label>
-<select id="gender">
-<option value="female">Женский</option>
-<option value="male">Мужской</option>
-</select>
-</div>
-<div>
-<label>Активность</label>
-<select id="activity">
-<option value="1.2">Низкая (офис, минимум движения)</option>
-<option value="1.35">Йога 1–2 раза в неделю</option>
-<option value="1.5">Йога 2–3 раза в неделю</option>
-</select>
-</div>
-<div>
-<label>Цель</label>
-<select id="goal">
-<option value="0.9">Мягкое снижение веса</option>
-<option value="1">Баланс и энергия</option>
-<option value="1.05">Поддержка формы</option>
-</select>
-</div>
-</div>
+          <div>
+            <label>Рост (см)</label>
+            <div class="field">
+              <div class="icon">📏</div>
+              <div class="ctrl"><input id="height" type="number" inputmode="numeric" min="120" max="210" placeholder="например, 170"></div>
+            </div>
+          </div>
 
-<button onclick="calc()">Рассчитать</button>
+          <div>
+            <label>Возраст</label>
+            <div class="field">
+              <div class="icon">🎂</div>
+              <div class="ctrl"><input id="age" type="number" inputmode="numeric" min="16" max="90" placeholder="например, 35"></div>
+            </div>
+          </div>
 
-<div id="daily" class="result hidden"></div>
-</div>
+          <div>
+            <label>Пол</label>
+            <div class="field">
+              <div class="icon">♀️</div>
+              <div class="ctrl">
+                <select id="gender">
+                  <option value="female" selected>Женский</option>
+                  <option value="male">Мужской</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-<div class="card">
-<h2>Меню на неделю</h2>
-<p class="muted">Структура, которую легко адаптировать под себя</p>
+          <div>
+            <label>Активность</label>
+            <div class="field">
+              <div class="icon">🏃‍♀️</div>
+              <div class="ctrl">
+                <select id="activity">
+                  <option value="1.25">Низкая (офис, минимум движения)</option>
+                  <option value="1.35" selected>Йога 1–2 раза в неделю</option>
+                  <option value="1.55">Йога 3–4 раза в неделю</option>
+                  <option value="1.75">Ежедневная активность</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-<button onclick="toggleWeek()">Показать / скрыть</button>
+          <div>
+            <label>Цель</label>
+            <div class="field">
+              <div class="icon">🎯</div>
+              <div class="ctrl">
+                <select id="goal">
+                  <option value="0.90">Мягкое снижение веса</option>
+                  <option value="1.00" selected>Баланс и энергия</option>
+                  <option value="1.05">Поддержка формы</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div id="week" class="hidden">
-<div class="day"><b>Понедельник</b><br>Овсянка · Курица · Овощи · Йогурт</div>
-<div class="day"><b>Вторник</b><br>Яйца · Рыба · Крупа · Фрукты</div>
-<div class="day"><b>Среда</b><br>Творог · Индейка · Овощи</div>
-<div class="day"><b>Четверг</b><br>Омлет · Рыба · Салат</div>
-<div class="day"><b>Пятница</b><br>Каша · Курица · Овощи</div>
-<div class="day"><b>Суббота</b><br>Свободный день</div>
-<div class="day"><b>Воскресенье</b><br>Интуитивное питание</div>
+        <button id="btnCalc" class="btn btnPrimary" type="button">Рассчитать</button>
+      </form>
 
-<button class="copy" onclick="copyMenu()">Скопировать меню для тренера</button>
-</div>
-</div>
+      <div id="calcOut" class="panel" style="display:none">
+        <div class="kpi">
+          <span class="pill">🌿 мягкий ориентир</span>
+          <div><strong>Суточная норма:</strong> <span id="dailyKcal">—</span> ккал</div>
+        </div>
+        <div class="muted" style="margin-top:8px" id="macroLine">Ориентир БЖУ: —</div>
 
-</div>
+        <div class="hr"></div>
+
+        <div style="font-weight:900;font-size:20px;margin-bottom:8px">Пример распределения по приёмам пищи:</div>
+        <ul class="list" id="splitList"></ul>
+
+        <div class="btnRow">
+          <button class="btn btnGhost btnSmall" type="button" id="btnDay">Показать 1 день</button>
+          <button class="btn btnGhost btnSmall" type="button" id="btnWeek">Показать неделю</button>
+        </div>
+
+        <div id="dayBox" class="panel" style="display:none;margin-top:14px"></div>
+
+        <div id="weekBox" class="panel" style="display:none;margin-top:14px">
+          <div style="font-weight:900;font-size:22px;margin-bottom:6px">Меню на неделю</div>
+          <div class="muted">Структура, которую легко адаптировать под себя</div>
+          <div class="hr"></div>
+
+          <div id="weekDays"></div>
+
+          <div class="hr"></div>
+          <button class="btn btnGhost btnSmall" type="button" id="btnCopy">Скопировать меню для тренера</button>
+          <div class="footerNote">Копируется кратко и понятно: суточная норма + список дней.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SMART MENU -->
+    <section class="card" id="smartCard">
+      <h2>Умное меню из продуктов</h2>
+      <p class="hint">
+        Можно <b>загрузить фото</b> продуктов — и мы аккуратно подставим список (имитация распознавания),
+        или <b>ввести продукты вручную</b>.
+      </p>
+
+      <div class="grid">
+        <div>
+          <label>Фото холодильника / продуктов</label>
+          <div class="field">
+            <div class="icon">📷</div>
+            <div class="ctrl"><input id="photo" type="file" accept="image/*"></div>
+          </div>
+          <div class="muted" style="margin-top:10px">
+            Нажмите «Заполнить из фото» — и список появится ниже.
+          </div>
+        </div>
+
+        <div>
+          <label>Продукты (через запятую)</label>
+          <div class="field" style="align-items:flex-start">
+            <div class="icon" style="margin-top:4px">🧺</div>
+            <div class="ctrl"><textarea id="products" placeholder="например: яйца, творог, овсянка, овощи, курица"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btnRow">
+        <button class="btn btnGhost btnSmall" type="button" id="btnFill">Заполнить из фото</button>
+        <button class="btn btnPrimary btnSmall" type="button" id="btnSmart">Составить меню</button>
+      </div>
+
+      <div id="smartOut" class="panel" style="display:none"></div>
+      <div class="footerNote">⚠️ Приложение носит ознакомительный характер и не заменяет консультацию специалиста.</div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast">Скопировано ✅</div>
 
 <script>
-function calc(){
-  const w=+weight.value,h=+height.value,a=+age.value;
-  if(!w||!h||!a){alert("Заполните все поля");return;}
-  const g=gender.value,act=+activity.value,goalv=+goal.value;
-  const bmr=g==="male"?10*w+6.25*h-5*a+5:10*w+6.25*h-5*a-161;
-  const cal=Math.round(bmr*act*goalv);
-  daily.classList.remove("hidden");
-  daily.innerHTML="<b>Суточная норма:</b> "+cal+" ккал<br><br>"+
-  "Завтрак ~30%<br>Обед ~35%<br>Перекус ~15%<br>Ужин ~20%";
-}
+(function(){
+  const $ = (id)=>document.getElementById(id);
 
-function toggleWeek(){
-  week.classList.toggle("hidden");
-}
+  const btnCalc = $("btnCalc");
+  const calcOut = $("calcOut");
+  const dailyKcal = $("dailyKcal");
+  const macroLine = $("macroLine");
+  const splitList = $("splitList");
 
-function copyMenu(){
-  navigator.clipboard.writeText(week.innerText);
-  alert("Меню скопировано");
-}
+  const btnDay = $("btnDay");
+  const btnWeek = $("btnWeek");
+  const dayBox = $("dayBox");
+  const weekBox = $("weekBox");
+  const weekDays = $("weekDays");
+  const btnCopy = $("btnCopy");
+
+  const btnFill = $("btnFill");
+  const btnSmart = $("btnSmart");
+  const photo = $("photo");
+  const products = $("products");
+  const smartOut = $("smartOut");
+
+  const toast = $("toast");
+  function showToast(text){
+    toast.textContent = text || "Готово ✅";
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"), 1400);
+  }
+
+  function round(n){ return Math.round(n); }
+
+  function calcBMR(w,h,a,gender){
+    // Mifflin–St Jeor
+    if(gender==="male") return 10*w + 6.25*h - 5*a + 5;
+    return 10*w + 6.25*h - 5*a - 161;
+  }
+
+  function buildSplit(cal){
+    // базовое распределение: 30/35/15/20
+    const split = [
+      {name:"Завтрак", p:0.30, icon:"🥣"},
+      {name:"Обед",    p:0.35, icon:"🍲"},
+      {name:"Перекус", p:0.15, icon:"🍏"},
+      {name:"Ужин",    p:0.20, icon:"🥗"},
+    ];
+    splitList.innerHTML = "";
+    split.forEach(s=>{
+      const kcal = round(cal*s.p);
+      const li = document.createElement("li");
+      li.className = "li";
+      li.innerHTML = `
+        <div class="dot">${s.icon}</div>
+        <div>
+          <b>${s.name}</b>
+          <div class="muted">~${round(s.p*100)}% (${kcal} ккал)</div>
+        </div>
+      `;
+      splitList.appendChild(li);
+    });
+    return split.map(s=>({ ...s, kcal: round(cal*s.p) }));
+  }
+
+  function macrosFromCalories(cal, w){
+    // мягкий ориентир: белок 1.3г/кг, жир 0.9г/кг, остальное углеводы
+    const p = round(w * 1.3);
+    const f = round(w * 0.9);
+    const c = Math.max(0, round((cal - (p*4 + f*9)) / 4));
+    return {p,f,c};
+  }
+
+  function buildDayMenu(split){
+    const blocks = [
+      {t:"Завтрак", icon:"🥣", kcal: split[0].kcal, items:["Овсянка — 60 г", "Творог/йогурт — 150 г", "Ягоды/фрукты — 1 порция", "Орехи — 10 г"]},
+      {t:"Обед", icon:"🍲", kcal: split[1].kcal, items:["Белок (курица/рыба/индейка) — 140–170 г", "Крупа (гречка/рис) — 60–70 г сухой", "Овощи/салат — 250–300 г", "Оливковое масло — 1 ч.л."]},
+      {t:"Перекус", icon:"🍏", kcal: split[2].kcal, items:["Йогурт натуральный — 150–200 г", "Фрукт — 1 шт.", "Орехи — 10 г (по желанию)"]},
+      {t:"Ужин", icon:"🥗", kcal: split[3].kcal, items:["Рыба/яйца/творог — 120–150 г", "Овощи — 250–350 г", "Масло — 1 ч.л. (по желанию)"]},
+    ];
+
+    const html = `
+      <div style="font-weight:900;font-size:22px;margin-bottom:6px">План на сегодня</div>
+      <div class="muted">Собрано как «конструктор»: меняем белок/гарнир/овощи — не ломая систему.</div>
+      <div class="hr"></div>
+      ${blocks.map(b=>`
+        <div class="li" style="margin:10px 0">
+          <div class="dot">${b.icon}</div>
+          <div style="flex:1">
+            <b>${b.t} <span class="muted">≈ ${b.kcal} ккал</span></b>
+            <div class="chips">
+              ${b.items.map(x=>`<span class="chip">${x}</span>`).join("")}
+            </div>
+          </div>
+        </div>
+      `).join("")}
+      <div class="hr"></div>
+      <div class="muted"><b>Подсказка:</b> если после йоги голодно — добавьте +1 фрукт или +1 порцию овощей.</div>
+    `;
+    dayBox.innerHTML = html;
+  }
+
+  function buildWeekMenu(){
+    const days = [
+      {d:"Понедельник", s:["Овсянка","Курица","Овощи","Йогурт"]},
+      {d:"Вторник",    s:["Яйца","Рыба","Крупа","Фрукты"]},
+      {d:"Среда",      s:["Творог","Индейка","Овощи"]},
+      {d:"Четверг",    s:["Омлет","Рыба","Салат"]},
+      {d:"Пятница",    s:["Каша","Курица","Овощи"]},
+      {d:"Суббота",    s:["Свободный день"]},
+      {d:"Воскресенье",s:["Интуитивное питание"]},
+    ];
+
+    weekDays.innerHTML = "";
+    days.forEach(x=>{
+      const el = document.createElement("details");
+      el.className = "day";
+      el.innerHTML = `
+        <summary>
+          <span>${x.d}</span>
+          <span class="sumRight">${x.s.join(" • ")}</span>
+        </summary>
+        <div class="dayBody">
+          <div class="muted">Идея дня:</div>
+          <div class="chips">
+            ${x.s.map(t=>`<span class="chip">${t}</span>`).join("")}
+          </div>
+        </div>
+      `;
+      weekDays.appendChild(el);
+    });
+  }
+
+  function toClipboard(text){
+    return navigator.clipboard.writeText(text);
+  }
+
+  function buildTrainerText(cal){
+    const lines = [];
+    lines.push(`Меню на неделю (ориентир): ~${cal} ккал/день`);
+    lines.push(`Распределение: завтрак 30% • обед 35% • перекус 15% • ужин 20%`);
+    lines.push("");
+    const daySummaries = Array.from(weekDays.querySelectorAll("details.day summary"))
+      .map(s=>s.textContent.trim().replace(/\s+/g," "));
+    daySummaries.forEach(x=>lines.push("— " + x));
+    return lines.join("\n");
+  }
+
+  function safeNumber(v){
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function doCalc(){
+    const w = safeNumber($("weight").value);
+    const h = safeNumber($("height").value);
+    const a = safeNumber($("age").value);
+    const gender = $("gender").value;
+    const act = safeNumber($("activity").value);
+    const goal = safeNumber($("goal").value);
+
+    if(!w || !h || !a){
+      alert("Пожалуйста, заполните вес, рост и возраст.");
+      return;
+    }
+
+    const bmr = calcBMR(w,h,a,gender);
+    const cal = Math.max(1200, round(bmr * act * goal));
+
+    const m = macrosFromCalories(cal, w);
+    dailyKcal.textContent = cal;
+    macroLine.textContent = `Ориентир БЖУ: белки ${m.p} г • жиры ${m.f} г • углеводы ${m.c} г`;
+
+    const split = buildSplit(cal);
+    buildDayMenu(split);
+    buildWeekMenu();
+
+    calcOut.style.display = "block";
+    dayBox.style.display = "none";
+    weekBox.style.display = "none";
+    showToast("Расчёт готов ✅");
+  }
+
+  function toggle(el){
+    el.style.display = (el.style.display === "none" || !el.style.display) ? "block" : "none";
+  }
+
+  // Smart menu
+  const mockSets = [
+    ["яйца","творог","овощи","йогурт","курица"],
+    ["рыба","гречка","овощи","яблоки","орехи"],
+    ["овсянка","кефир","ягоды","сыр","зелень"],
+    ["индейка","рис","салат","банан","творог"],
+  ];
+
+  function fillFromPhoto(){
+    if(!photo.files || !photo.files[0]){
+      alert("Сначала выберите фото.");
+      return;
+    }
+    const pick = mockSets[Math.floor(Math.random()*mockSets.length)];
+    products.value = pick.join(", ");
+    showToast("Список заполнен из фото ✅");
+  }
+
+  function makeSmartMenu(){
+    const list = products.value.trim();
+    if(!list){
+      alert("Введите продукты (через запятую) или заполните из фото.");
+      return;
+    }
+    const items = list.split(",").map(x=>x.trim()).filter(Boolean);
+    const nice = items.slice(0, 10);
+
+    smartOut.style.display = "block";
+    smartOut.innerHTML = `
+      <div style="font-weight:900;font-size:22px;margin-bottom:6px">Меню из того, что есть</div>
+      <div class="muted">Собрано как быстрый шаблон на день. Можно повторять и менять белок/гарнир/овощи.</div>
+      <div class="hr"></div>
+
+      <div class="li">
+        <div class="dot">🥣</div>
+        <div><b>Завтрак</b><div class="muted">Основа + добавка из: ${nice.join(", ")}</div></div>
+      </div>
+      <div class="li">
+        <div class="dot">🍲</div>
+        <div><b>Обед</b><div class="muted">Тёплая тарелка из: ${nice.join(", ")}</div></div>
+      </div>
+      <div class="li">
+        <div class="dot">🍏</div>
+        <div><b>Перекус</b><div class="muted">Лёгкий вариант из: ${nice.join(", ")}</div></div>
+      </div>
+      <div class="li">
+        <div class="dot">🥗</div>
+        <div><b>Ужин</b><div class="muted">Мягкий приём пищи из: ${nice.join(", ")}</div></div>
+      </div>
+
+      <div class="hr"></div>
+      <div class="muted"><b>Подсказка:</b> если усталость высокая — добавьте больше овощей и норму белка в обед.</div>
+    `;
+    showToast("Меню собрано ✅");
+  }
+
+  // Bind
+  btnCalc.addEventListener("click", doCalc);
+  btnDay.addEventListener("click", ()=>toggle(dayBox));
+  btnWeek.addEventListener("click", ()=>toggle(weekBox));
+
+  btnCopy.addEventListener("click", async ()=>{
+    const cal = dailyKcal.textContent || "—";
+    const text = buildTrainerText(cal);
+    try{
+      await toClipboard(text);
+      showToast("Скопировано ✅");
+    }catch(e){
+      alert("Не получилось скопировать. Попробуйте другой браузер.");
+    }
+  });
+
+  btnFill.addEventListener("click", fillFromPhoto);
+  btnSmart.addEventListener("click", makeSmartMenu);
+
+  // prevent form submit by Enter
+  $("calcForm").addEventListener("submit", (e)=>e.preventDefault());
+})();
 </script>
-
 </body>
 </html>
