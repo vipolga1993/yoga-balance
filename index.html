@@ -7,240 +7,243 @@
 
   <style>
     :root{
-      --bg:#f6faf7;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --line:#e7efe9;
+      --bg: #f6faf7;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e7efe9;
 
-      --green:#6fbf8a;
-      --green-2:#2f6f4e;
-      --green-soft:#e9f6ee;
+      --green: #6fbf8a;
+      --green2:#2f6f4e;
+      --greenSoft:#e9f6ee;
 
-      --shadow: 0 10px 24px rgba(0,0,0,.06);
-      --r:18px;
+      --shadow: 0 12px 30px rgba(0,0,0,.06);
+      --r: 18px;
+      --r2: 14px;
     }
 
-    *{ box-sizing:border-box; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--text);
+      background:
+        radial-gradient(900px 520px at 15% 0%, #eaf8f0 0%, transparent 60%),
+        radial-gradient(900px 520px at 95% 10%, #eef5ff 0%, transparent 58%),
+        var(--bg);
     }
     .wrap{
-      max-width: 980px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 22px 16px 60px;
     }
 
-    .top{
+    /* Header */
+    .header{
       display:flex;
-      align-items:flex-start;
       gap:14px;
-      margin-bottom:16px;
+      align-items:flex-start;
+      margin: 10px 0 18px;
     }
     .logo{
-      width:44px;height:44px;
-      border-radius:14px;
-      background: linear-gradient(145deg, #dff3e7, #f7fff9);
+      width:48px;height:48px;
+      border-radius: 16px;
+      display:grid;place-items:center;
+      background: linear-gradient(145deg, #dff3e7, #f8fff9);
+      border: 1px solid rgba(0,0,0,.03);
       box-shadow: var(--shadow);
-      display:flex;
-      align-items:center;
-      justify-content:center;
       font-size:22px;
+      flex: 0 0 auto;
     }
     h1{
       margin:0;
-      font-size:34px;
-      color:#2f4f3f;
-      letter-spacing:-.3px;
+      font-size: 34px;
+      letter-spacing: -.3px;
+      color: #2f4f3f;
+      line-height: 1.15;
     }
     .subtitle{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.5;
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 840px;
     }
 
+    /* Layout */
     .grid{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:16px;
-      margin-top:16px;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
+      margin-top: 16px;
     }
-    @media (max-width: 920px){
+    @media (max-width: 980px){
       .grid{ grid-template-columns: 1fr; }
     }
 
+    /* Cards */
     .card{
-      background:var(--card);
+      background: var(--card);
+      border: 1px solid rgba(0,0,0,.04);
       border-radius: var(--r);
       box-shadow: var(--shadow);
-      border:1px solid rgba(0,0,0,.03);
-      padding:18px;
+      padding: 18px;
     }
     .card h2{
-      margin:0 0 14px;
-      font-size:26px;
-      letter-spacing:-.2px;
-    }
-    .card h3{
-      margin:16px 0 10px;
-      font-size:18px;
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -.2px;
     }
     .hint{
-      color:var(--muted);
-      font-size:14px;
       margin: 0 0 14px;
-      line-height:1.5;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
-    .formGrid{
+    /* Form */
+    .form{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap:14px;
+      gap: 14px;
+      margin-top: 12px;
     }
-    @media (max-width: 700px){
-      .formGrid{ grid-template-columns: 1fr; }
+    @media (max-width: 720px){
+      .form{ grid-template-columns: 1fr; }
     }
-
     label{
       display:block;
-      font-size:13px;
-      color:var(--muted);
+      font-size: 13px;
+      color: var(--muted);
       margin: 0 0 6px;
     }
-
     input, select, textarea{
-      width:100%;
+      width: 100%;
       padding: 12px 12px;
-      border-radius: 14px;
-      border:1px solid #e6e6e6;
-      background:#fbfbfb;
-      outline:none;
-      font-size:16px;
-    }
-    input:focus, select:focus, textarea:focus{
-      border-color:#bfe8cf;
-      box-shadow: 0 0 0 4px rgba(111,191,138,.15);
-      background:#fff;
+      border-radius: var(--r2);
+      border: 1px solid #e6e6e6;
+      background: #fbfbfb;
+      outline: none;
+      font-size: 16px;
     }
     textarea{
-      min-height: 92px;
+      min-height: 96px;
       resize: vertical;
     }
+    input:focus, select:focus, textarea:focus{
+      border-color: #bfe8cf;
+      box-shadow: 0 0 0 4px rgba(111,191,138,.16);
+      background:#fff;
+    }
 
+    /* Buttons */
     .btn{
-      width:100%;
-      margin-top: 14px;
+      width: 100%;
       border: none;
       border-radius: 16px;
-      padding: 16px 14px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor:pointer;
+      padding: 15px 14px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
       background: var(--green);
-      color:#fff;
-      transition: transform .04s ease, filter .2s ease;
+      color: #fff;
+      transition: transform .05s ease, filter .2s ease;
+      margin-top: 14px;
     }
+    .btn:hover{ filter: brightness(.98); }
     .btn:active{ transform: translateY(1px); }
-    .btn:hover{ filter: brightness(0.98); }
 
     .btn.secondary{
-      background: #e9f6ee;
-      color: #2f6f4e;
-      font-weight: 700;
+      background: var(--greenSoft);
+      color: var(--green2);
+      border: 1px solid #dfeee6;
+      font-weight: 800;
     }
 
-    .row{
+    .btnRow{
       display:flex;
       gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-      margin-top:10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .btnRow .btn{
+      margin-top:0;
+      width: auto;
+      padding: 12px 14px;
+      border-radius: 999px;
+      font-size: 15px;
     }
 
+    /* Small UI */
     .pill{
       display:inline-flex;
+      gap: 8px;
       align-items:center;
-      gap:8px;
-      padding:8px 12px;
+      padding: 8px 12px;
       border-radius: 999px;
-      background: var(--green-soft);
-      color: var(--green-2);
-      font-size: 14px;
-      font-weight: 700;
+      background: var(--greenSoft);
+      color: var(--green2);
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 10px;
     }
-
     .divider{
-      height:1px;
+      height: 1px;
       background: var(--line);
       margin: 14px 0;
     }
 
-    .resultWrap{
-      margin-top: 14px;
-      display:none;
-    }
-
-    .resultCard{
+    /* Results */
+    .resultWrap{ display:none; margin-top: 14px; }
+    .statCard{
       background: #f7fbf8;
-      border:1px solid #dff1e7;
+      border: 1px solid #dff1e7;
       border-radius: 16px;
       padding: 14px;
     }
-
-    .bigStat{
+    .big{
       display:flex;
-      gap: 10px;
-      align-items: baseline;
+      gap:10px;
       flex-wrap: wrap;
-    }
-    .bigStat b{
-      font-size: 18px;
+      align-items: baseline;
     }
     .kcal{
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 900;
-      color: var(--green-2);
+      color: var(--green2);
     }
     .muted{
-      color:var(--muted);
+      color: var(--muted);
       font-size: 14px;
+      line-height: 1.55;
       margin-top: 6px;
-      line-height: 1.5;
     }
 
-    .mealList{
-      margin: 10px 0 0;
-      padding: 0;
-      list-style: none;
+    .mealGrid{
+      list-style:none;
+      padding:0;
+      margin: 12px 0 0;
       display:grid;
-      gap:10px;
+      gap: 10px;
     }
-
     .mealItem{
-      background:#fff;
-      border:1px solid #e9f3ee;
-      border-radius: 14px;
-      padding: 12px 12px;
       display:flex;
-      gap:10px;
+      gap: 10px;
       align-items:flex-start;
+      padding: 12px;
+      border-radius: 14px;
+      background:#fff;
+      border: 1px solid #e9f3ee;
     }
     .mealIcon{
-      width:34px; height:34px;
-      border-radius: 12px;
-      background: var(--green-soft);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:18px;
+      width: 36px;
+      height: 36px;
+      border-radius: 14px;
+      background: var(--greenSoft);
+      display:grid;
+      place-items:center;
+      font-size: 18px;
       flex: 0 0 auto;
-    }
-    .mealText{
-      flex:1 1 auto;
     }
     .mealTitle{
       font-weight: 900;
@@ -248,211 +251,181 @@
     }
     .mealSub{
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
+      line-height: 1.45;
     }
 
     .tabs{
       display:flex;
-      gap:10px;
-      margin-top: 14px;
+      gap: 10px;
       flex-wrap: wrap;
+      margin-top: 14px;
     }
     .tabBtn{
-      border:1px solid #dfeee6;
-      background:#fff;
-      color:#2f4f3f;
+      border: 1px solid #dfeee6;
+      background: #fff;
+      color: #2f4f3f;
       border-radius: 999px;
       padding: 10px 14px;
-      font-weight: 800;
-      cursor:pointer;
+      font-weight: 900;
+      cursor: pointer;
     }
     .tabBtn.active{
-      background: var(--green-soft);
+      background: var(--greenSoft);
       border-color: #bfe8cf;
-      color: var(--green-2);
+      color: var(--green2);
     }
 
-    .menuBox{
-      margin-top: 12px;
-      display:none;
-    }
-
-    .menuDay{
+    .menuBox{ display:none; margin-top: 12px; }
+    .dayCard{
       background:#fff;
-      border:1px solid #e8f3ec;
+      border: 1px solid #e8f3ec;
       border-radius: 16px;
       padding: 14px;
       margin-bottom: 12px;
     }
-    .menuDay h4{
-      margin:0 0 8px;
+    .dayCard h3{
+      margin:0 0 6px;
       font-size: 16px;
       letter-spacing: -.2px;
     }
-    .menuDay .dayHint{
+    .dayHint{
+      margin:0 0 10px;
       color: var(--muted);
       font-size: 13px;
-      margin: 0 0 10px;
+      line-height: 1.45;
     }
-    .menuLines{
+    .lines{
       margin:0;
       padding-left: 18px;
       display:grid;
-      gap:8px;
+      gap: 8px;
+      line-height: 1.45;
     }
-    .menuLines li{
+    .mini{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
       line-height: 1.45;
     }
 
-    .finePrint{
-      margin-top: 14px;
+    /* Smart menu */
+    .smartOut{ display:none; margin-top: 12px; }
+    .note{
+      margin-top: 10px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.5;
     }
-
-    .fileRow{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:10px;
-    }
-
-    .fakeAiBox{
-      background:#f7fbf8;
-      border:1px dashed #bfe8cf;
-      border-radius: 16px;
-      padding: 12px;
-      color:#2f6f4e;
-      font-size: 14px;
-      display:none;
-    }
-
-    .smallNote{
-      font-size: 13px;
-      color: var(--muted);
-      margin: 6px 0 0;
-    }
-
-    .mini{
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .twoBtns{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .twoBtns .btn{
-      margin-top: 0;
-      width:auto;
-      padding: 12px 14px;
-      font-size: 15px;
-      border-radius: 999px;
-    }
-
     .warn{
       display:none;
       margin-top: 12px;
-      background: #fff7ed;
-      border: 1px solid #fed7aa;
-      color: #9a3412;
       padding: 12px;
       border-radius: 14px;
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+      color:#9a3412;
       font-size: 14px;
       line-height: 1.5;
+    }
+
+    /* Footer note */
+    .footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
     }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-
-    <div class="top">
+    <div class="header">
       <div class="logo">🥗</div>
       <div>
         <h1>Меню из холодильника</h1>
         <p class="subtitle">
-          Мягкий расчёт питания для женщин 30–45 лет, практикующих йогу 1–2 раза в неделю.
-          Цель — снижение веса без стресса: понятные порции, калории по приёмам пищи и готовая неделя.
+          Мягкое питание для женщин, практикующих йогу и выбирающих бережный подход к телу.
+          Без диет, запретов и давления — с опорой на самочувствие, энергию и реальную жизнь.
         </p>
       </div>
     </div>
 
     <div class="grid">
-
-      <!-- ЛЕВО: РАСЧЕТ + МЕНЮ -->
+      <!-- LEFT: Calculation + Menu -->
       <div class="card">
         <h2>Персональный расчёт</h2>
-        <p class="hint">Заполни параметры → нажми «Рассчитать» → получишь суточную норму и красивую разбивку по приёмам пищи.</p>
+        <p class="hint">
+          Заполните параметры — я подскажу ориентир по энергии и покажу, как распределить питание в течение дня мягко и устойчиво.
+        </p>
 
-        <div class="formGrid">
+        <div class="form">
           <div>
             <label for="weight">Вес (кг)</label>
-            <input id="weight" type="number" inputmode="decimal" placeholder="например: 72" />
+            <input id="weight" type="number" inputmode="decimal" placeholder="например: 72">
           </div>
-
           <div>
             <label for="height">Рост (см)</label>
-            <input id="height" type="number" inputmode="decimal" placeholder="например: 168" />
+            <input id="height" type="number" inputmode="decimal" placeholder="например: 168">
           </div>
-
           <div>
             <label for="age">Возраст</label>
-            <input id="age" type="number" inputmode="numeric" placeholder="например: 36" />
+            <input id="age" type="number" inputmode="numeric" placeholder="например: 36">
           </div>
-
           <div>
             <label for="gender">Пол</label>
             <select id="gender">
-              <option value="female">Женский</option>
+              <option value="female" selected>Женский</option>
               <option value="male">Мужской</option>
             </select>
           </div>
-
           <div>
-            <label for="activity">Активность</label>
+            <label for="activity">Активность в течение дня</label>
             <select id="activity">
-              <option value="1.35">Йога 1–2 раза в неделю</option>
-              <option value="1.55">Йога 3–4 раза в неделю</option>
-              <option value="1.75">Ежедневная активность</option>
+              <option value="1.2">Низкая активность — офис, дорога, мало движения</option>
+              <option value="1.35">Умеренная активность — прогулки и бытовое движение</option>
+              <option value="1.45">Йога 1–2 раза в неделю — мягкая практика</option>
+              <option value="1.55">Йога 2–3 раза в неделю — регулярная практика</option>
+              <option value="1.7">Йога 3+ раза в неделю / активный ритм</option>
             </select>
           </div>
-
           <div>
             <label for="goal">Цель</label>
             <select id="goal">
-              <option value="0.90">Мягкое снижение веса</option>
+              <option value="0.90" selected>Мягкое снижение веса</option>
               <option value="1.00">Баланс и энергия</option>
               <option value="1.05">Поддержка формы</option>
             </select>
           </div>
         </div>
 
-        <button class="btn" id="calcBtn" type="button">Рассчитать</button>
+        <div class="pill">🌿 Нежный ориентир, а не жёсткий контроль</div>
 
-        <div class="warn" id="warnBox">Заполни вес, рост и возраст (числа), и попробуй ещё раз.</div>
+        <button class="btn" id="calcBtn" type="button">Рассчитать</button>
+        <div class="warn" id="warnCalc">Пожалуйста, заполните вес, рост и возраст (числами), и попробуйте ещё раз.</div>
 
         <div class="resultWrap" id="resultWrap">
-          <div class="resultCard">
-            <div class="bigStat">
-              <b>Суточная норма:</b> <span class="kcal" id="dailyKcal">—</span> <span>ккал</span>
+          <div class="statCard">
+            <div class="big">
+              <div><b>Ваша суточная норма энергии:</b></div>
+              <div class="kcal" id="dailyKcal">—</div>
+              <div>ккал</div>
             </div>
             <div class="muted" id="bjuText">Ориентир БЖУ: —</div>
 
             <div class="divider"></div>
 
-            <b>Пример распределения по приёмам пищи:</b>
-            <ul class="mealList" id="mealSplit">
-              <!-- заполняется JS -->
-            </ul>
+            <b>Как распределить питание в течение дня</b>
+            <div class="muted">Примерная структура, которую легко подстроить под себя.</div>
 
-            <div class="muted" id="toneLine">Подходит для йоги и мягкого снижения веса.</div>
+            <ul class="mealGrid" id="mealSplit"></ul>
+
+            <div class="muted" id="toneLine">Подходит для йоги, восстановления и мягкого движения к цели.</div>
 
             <div class="tabs">
-              <button class="tabBtn active" id="tabDay" type="button">Показать 1 день</button>
-              <button class="tabBtn" id="tabWeek" type="button">Показать неделю</button>
+              <button class="tabBtn active" id="tabDay" type="button">Посмотреть пример на день</button>
+              <button class="tabBtn" id="tabWeek" type="button">Посмотреть меню на неделю</button>
             </div>
 
             <div class="menuBox" id="dayBox"></div>
@@ -461,19 +434,19 @@
         </div>
       </div>
 
-      <!-- ПРАВО: УМНОЕ МЕНЮ ИЗ ПРОДУКТОВ -->
+      <!-- RIGHT: Smart Menu -->
       <div class="card">
         <h2>Умное меню из продуктов</h2>
         <p class="hint">
-          Два варианта: <b>загрузить фото</b> (демо-распознавание) или <b>ввести продукты вручную</b>.
-          Цель — показать заказчику «вау, как продумано».
+          Я помогу составить меню из того, что уже есть у вас дома.
+          Можно загрузить фото холодильника <b>или</b> написать продукты вручную — как вам удобнее 🤍
         </p>
 
-        <div class="fileRow">
-          <label for="fridgePhoto">Фото холодильника / продуктов</label>
-          <input id="fridgePhoto" type="file" accept="image/*" />
-          <div class="fakeAiBox" id="fakeAiBox"></div>
-          <div class="smallNote">Демо-режим: «распознавание» имитируется прямо в браузере (без сервера).</div>
+        <label for="fridgePhoto">Загрузите фото холодильника или продуктов</label>
+        <input id="fridgePhoto" type="file" accept="image/*">
+
+        <div class="btnRow">
+          <button class="btn secondary" id="fillFromPhotoBtn" type="button">Заполнить по фото</button>
         </div>
 
         <div class="divider"></div>
@@ -481,390 +454,381 @@
         <label for="products">Продукты (через запятую)</label>
         <textarea id="products" placeholder="например: яйца, творог, овсянка, овощи, курица"></textarea>
 
-        <div class="twoBtns">
-          <button class="btn secondary" id="fillFromPhotoBtn" type="button">Заполнить из фото</button>
-          <button class="btn" id="smartMenuBtn" type="button">Составить меню</button>
-        </div>
+        <button class="btn" id="smartMenuBtn" type="button">Составить меню</button>
 
-        <div class="menuBox" id="smartMenuBox"></div>
+        <div class="warn" id="warnSmart">Пожалуйста, добавьте список продуктов (или нажмите «Заполнить по фото»).</div>
 
-        <div class="finePrint">
-          ⚠️ Приложение носит ознакомительный характер и не заменяет консультацию специалиста.
+        <div class="smartOut" id="smartOut"></div>
+
+        <div class="footer">
+          Этот сервис помогает сориентироваться в питании и не заменяет индивидуальную консультацию специалиста.
         </div>
       </div>
-
     </div>
   </div>
 
   <script>
-    // ===== УТИЛИТЫ =====
-    function byId(id){ return document.getElementById(id); }
-
-    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-
-    function round(n){ return Math.round(n); }
+    // Helpers
+    const $ = (id) => document.getElementById(id);
 
     function parseNum(v){
-      if(v === null || v === undefined) return NaN;
-      const s = String(v).replace(",", ".").trim();
+      const s = String(v ?? "").replace(",", ".").trim();
       const n = Number(s);
       return Number.isFinite(n) ? n : NaN;
     }
+    function round(n){ return Math.round(n); }
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 
     function kcalSplit(total){
-      // 30/35/15/20
       const breakfast = round(total * 0.30);
-      const lunch = round(total * 0.35);
-      const snack = round(total * 0.15);
-      const dinner = total - breakfast - lunch - snack;
+      const lunch     = round(total * 0.35);
+      const snack     = round(total * 0.15);
+      const dinner    = total - breakfast - lunch - snack;
       return { breakfast, lunch, snack, dinner };
     }
 
     function safeText(s){
-      return String(s).replace(/[<>&"]/g, (c)=>({ "<":"&lt;", ">":"&gt;", "&":"&amp;", '"':"&quot;" }[c]));
+      return String(s).replace(/[<>&"]/g, c => ({ "<":"&lt;", ">":"&gt;", "&":"&amp;", '"':"&quot;" }[c]));
     }
 
-    // ===== ОСНОВНОЙ РАСЧЕТ =====
-    function calculateDaily(){
-      const w = parseNum(byId("weight").value);
-      const h = parseNum(byId("height").value);
-      const a = parseNum(byId("age").value);
+    // Calculation (Mifflin-St Jeor)
+    function calculate(){
+      const w = parseNum($("weight").value);
+      const h = parseNum($("height").value);
+      const a = parseNum($("age").value);
 
-      const warnBox = byId("warnBox");
-      warnBox.style.display = "none";
+      $("warnCalc").style.display = "none";
 
       if(!Number.isFinite(w) || !Number.isFinite(h) || !Number.isFinite(a) || w<=0 || h<=0 || a<=0){
-        warnBox.style.display = "block";
-        byId("resultWrap").style.display = "none";
+        $("warnCalc").style.display = "block";
+        $("resultWrap").style.display = "none";
         return null;
       }
 
-      const g = byId("gender").value;
-      const act = parseNum(byId("activity").value);
-      const goal = parseNum(byId("goal").value);
+      const g = $("gender").value;
+      const act  = parseNum($("activity").value);
+      const goal = parseNum($("goal").value);
 
-      // Mifflin-St Jeor
       const bmr = (g === "male")
         ? (10*w + 6.25*h - 5*a + 5)
         : (10*w + 6.25*h - 5*a - 161);
 
       let cal = round(bmr * act * goal);
+      cal = clamp(cal, 1200, 3000);
 
-      // ограничим «реалистично»
-      cal = clamp(cal, 1200, 2800);
-
-      // макросы (очень мягкий ориентир)
-      const p = round(w * 1.3);     // белок
-      const f = round(w * 0.9);     // жиры
-      const c = Math.max(0, round((cal - (p*4 + f*9)) / 4)); // углеводы
+      // Macros - gentle guideline
+      const p = round(w * 1.3);
+      const f = round(w * 0.9);
+      const c = Math.max(0, round((cal - (p*4 + f*9)) / 4));
 
       return { cal, p, f, c };
+    }
+
+    function toneByGoal(){
+      const goal = parseNum($("goal").value);
+      if(goal <= 0.91) return "Подходит для йоги и мягкого снижения веса без давления.";
+      if(goal < 1.03)  return "Подходит для поддержания энергии и ровного самочувствия.";
+      return "Подходит для поддержки формы и восстановления после практики.";
     }
 
     function renderResults(model){
       const { cal, p, f, c } = model;
 
-      byId("dailyKcal").textContent = String(cal);
-      byId("bjuText").textContent = `Ориентир БЖУ: белки ${p} г • жиры ${f} г • углеводы ${c} г`;
+      $("dailyKcal").textContent = String(cal);
+      $("bjuText").textContent = `Ориентир БЖУ: белки ${p} г • жиры ${f} г • углеводы ${c} г`;
+      $("toneLine").textContent = toneByGoal();
 
-      // тональность (по цели)
-      const goal = parseNum(byId("goal").value);
-      let tone = "Подходит для йоги и мягкого снижения веса.";
-      if(goal >= 1.0 && goal < 1.04) tone = "Подходит для поддержания энергии и ровного самочувствия.";
-      if(goal >= 1.04) tone = "Подходит для поддержки формы и восстановления после практики.";
-      byId("toneLine").textContent = tone;
-
-      // распределение
       const split = kcalSplit(cal);
       const items = [
-        { icon:"🫐", title:"Завтрак", kcal: split.breakfast, pct:"~30%" },
-        { icon:"🍲", title:"Обед", kcal: split.lunch, pct:"~35%" },
-        { icon:"🍏", title:"Перекус", kcal: split.snack, pct:"~15%" },
-        { icon:"🥗", title:"Ужин", kcal: split.dinner, pct:"~20%" },
+        { icon:"🫐", title:"Завтрак", pct:"около 30%", kcal: split.breakfast },
+        { icon:"🍲", title:"Обед",     pct:"около 35%", kcal: split.lunch },
+        { icon:"🍏", title:"Перекус",  pct:"около 15%", kcal: split.snack },
+        { icon:"🥗", title:"Ужин",     pct:"около 20%", kcal: split.dinner },
       ];
 
-      const ul = byId("mealSplit");
-      ul.innerHTML = items.map(x => `
+      $("mealSplit").innerHTML = items.map(x => `
         <li class="mealItem">
           <div class="mealIcon">${x.icon}</div>
-          <div class="mealText">
-            <div class="mealTitle">${x.title}: ${x.pct} (${x.kcal} ккал)</div>
-            <div class="mealSub">Порции и продукты будут в меню ниже</div>
+          <div>
+            <div class="mealTitle">${safeText(x.title)} — ${safeText(x.pct)} (${x.kcal} ккал)</div>
+            <div class="mealSub">Это ориентир: вы можете менять продукты, сохраняя структуру.</div>
           </div>
         </li>
       `).join("");
 
-      // меню 1 день + неделя
       renderDayMenu(cal);
       renderWeekMenu(cal);
 
-      // показать блок
-      byId("resultWrap").style.display = "block";
-      // по умолчанию открыт 1 день
+      $("resultWrap").style.display = "block";
       showTab("day");
     }
 
-    // ===== МЕНЮ: 1 ДЕНЬ =====
-    function renderDayMenu(totalKcal){
-      const split = kcalSplit(totalKcal);
-
-      const day = [
-        {
-          title: `🫐 Завтрак ≈ ${split.breakfast} ккал`,
-          lines: [
-            "Овсянка (сухая) — 60 г",
-            "Ягоды — 100 г",
-            "Яйцо — 1–2 шт (по голоду)",
-            "Мёд — 1 ч.л. (по желанию)"
-          ]
-        },
-        {
-          title: `🍲 Обед ≈ ${split.lunch} ккал`,
-          lines: [
-            "Курица/рыба — 140–170 г",
-            "Гречка/рис (сухая) — 60–70 г",
-            "Салат/овощи — 250–300 г",
-            "Оливковое масло — 1 ч.л."
-          ]
-        },
-        {
-          title: `🍏 Перекус ≈ ${split.snack} ккал`,
-          lines: [
-            "Творог 5% — 180–220 г",
-            "Фрукт (яблоко/груша) — 1 шт",
-            "Орехи — 10 г (если хочется)"
-          ]
-        },
-        {
-          title: `🥗 Ужин ≈ ${split.dinner} ккал`,
-          lines: [
-            "Овощи — 300–400 г",
-            "Белок (яйца 2 шт / рыба 140 г / творог 150 г) — 1 вариант",
-            "Масло — 1 ч.л. (если не было в обед)"
-          ]
-        }
-      ];
-
-      byId("dayBox").innerHTML = `
-        <div class="menuDay">
-          <h4>Твой мягкий план питания на сегодня</h4>
-          <p class="dayHint">Структура «белок + гарнир + овощи» даёт сытость и снижает тягу к сладкому.</p>
-
-          ${day.map(block => `
-            <div class="menuDay" style="margin:0 0 12px; background:#fff;">
-              <h4 style="margin:0 0 8px;">${safeText(block.title)}</h4>
-              <ul class="menuLines">
-                ${block.lines.map(x=>`<li>${safeText(x)}</li>`).join("")}
-              </ul>
-            </div>
-          `).join("")}
-
-          <div class="pill">💡 Если есть усталость: добавь воды и овощей, а ужин сделай легче.</div>
-        </div>
-      `;
-    }
-
-    // ===== МЕНЮ: НЕДЕЛЯ =====
-    function renderWeekMenu(totalKcal){
-      const split = kcalSplit(totalKcal);
-      const B = split.breakfast, L = split.lunch, S = split.snack, D = split.dinner;
-
-      // шаблоны — вариативность без «каши»
-      const breakfast = [
-        "Овсянка 60 г + ягоды 100 г + яйцо 1–2 шт",
-        "Йогурт натуральный 250 г + фрукты 1 шт + орехи 10 г",
-        "Творог 200 г + груша/яблоко 1 шт + мёд 1 ч.л.",
-        "Омлет 2 яйца + овощи 250 г + хлеб цельнозерн. 1 ломтик",
-      ];
-      const lunch = [
-        "Курица/рыба 150 г + гречка/рис 60–70 г (сухая) + салат 300 г",
-        "Индейка 150 г + картофель 250 г (запеч.) + овощи 250 г",
-        "Рыба 170 г + киноа/рис 60 г (сухая) + овощи 300 г",
-        "Тёплая тарелка: фасоль/чечевица 200 г + овощи 300 г + масло 1 ч.л.",
-      ];
-      const snack = [
-        "Творог 180–220 г + фрукт 1 шт",
-        "Йогурт 200–250 г + ягоды 100 г",
-        "Яйца 2 шт + овощи 200 г",
-        "Горсть орехов 15 г + фрукт 1 шт",
-      ];
-      const dinner = [
-        "Овощи 350 г + рыба 140 г",
-        "Овощи 350 г + яйца 2 шт",
-        "Овощи 350 г + творог 150 г",
-        "Овощи 350 г + курица 120–140 г",
-      ];
-
-      const days = [
-        { name:"Понедельник", tone:"баланс и старт" },
-        { name:"Вторник", tone:"лёгкость" },
-        { name:"Среда", tone:"стабильная энергия" },
-        { name:"Четверг", tone:"без срывов" },
-        { name:"Пятница", tone:"поддержка формы" },
-        { name:"Суббота", tone:"вкусно и просто" },
-        { name:"Воскресенье", tone:"мягкое восстановление" },
-      ];
-
-      function pick(arr, i){ return arr[i % arr.length]; }
-
-      const html = `
-        <div class="menuDay">
-          <h4>Меню на неделю (структура + вариативность)</h4>
-          <p class="dayHint">Суточная цель: ~${totalKcal} ккал. Меняем «белок/гарнир/овощи», не ломая систему.</p>
-
-          ${days.map((d, i)=>`
-            <div class="menuDay" style="margin:0 0 12px; background:#fff;">
-              <h4 style="margin:0 0 8px;">${d.name} — ${d.tone}</h4>
-              <ul class="menuLines">
-                <li><b>🫐 Завтрак (~${B} ккал):</b> ${safeText(pick(breakfast, i))}</li>
-                <li><b>🍲 Обед (~${L} ккал):</b> ${safeText(pick(lunch, i))}</li>
-                <li><b>🍏 Перекус (~${S} ккал):</b> ${safeText(pick(snack, i))}</li>
-                <li><b>🥗 Ужин (~${D} ккал):</b> ${safeText(pick(dinner, i))}</li>
-              </ul>
-              <div class="mini">Подсказка дня: держи овощи в каждом приёме — так легче снижать вес.</div>
-            </div>
-          `).join("")}
-
-          <div class="pill">✨ Ого-эффект: это «готовая неделя», которую можно повторять 3–4 раза (получится месяц).</div>
-        </div>
-      `;
-
-      byId("weekBox").innerHTML = html;
-    }
-
     function showTab(which){
-      const tabDay = byId("tabDay");
-      const tabWeek = byId("tabWeek");
-      const dayBox = byId("dayBox");
-      const weekBox = byId("weekBox");
+      const dayBtn = $("tabDay");
+      const weekBtn = $("tabWeek");
+      const dayBox = $("dayBox");
+      const weekBox = $("weekBox");
 
       if(which === "day"){
-        tabDay.classList.add("active");
-        tabWeek.classList.remove("active");
+        dayBtn.classList.add("active");
+        weekBtn.classList.remove("active");
         dayBox.style.display = "block";
         weekBox.style.display = "none";
       } else {
-        tabWeek.classList.add("active");
-        tabDay.classList.remove("active");
+        weekBtn.classList.add("active");
+        dayBtn.classList.remove("active");
         weekBox.style.display = "block";
         dayBox.style.display = "none";
       }
     }
 
-    // ===== УМНОЕ МЕНЮ ИЗ ПРОДУКТОВ (ДЕМО) =====
-    const demoRecognitions = [
-      "яйца, творог, овсянка, овощи, яблоки",
-      "курица, рис, огурцы, помидоры, йогурт",
-      "рыба, гречка, салат, ягоды, яйца",
-      "творог, груша, орехи, овощи, йогурт",
-      "индейка, картофель, овощи, яблоки, яйца"
-    ];
+    function renderDayMenu(totalKcal){
+      const s = kcalSplit(totalKcal);
 
-    function simulateRecognition(file){
-      // демо: подбираем «распознано» по имени файла или случайно
-      const name = (file && file.name ? file.name.toLowerCase() : "");
-      let idx = Math.floor(Math.random() * demoRecognitions.length);
+      const blocks = [
+        {
+          title: `🫐 Завтрак ≈ ${s.breakfast} ккал`,
+          hint:  "Тёплый и сытный — чтобы не тянуться к сладкому через час.",
+          lines: [
+            "Овсяные хлопья (сухие) — 60 г",
+            "Ягоды — 100 г",
+            "Яйцо — 1–2 шт (по голоду)",
+            "Орехи — 10 г (по желанию)"
+          ]
+        },
+        {
+          title: `🍲 Обед ≈ ${s.lunch} ккал`,
+          hint:  "Основной приём пищи для энергии и стабильности.",
+          lines: [
+            "Курица/рыба — 140–170 г",
+            "Гречка/рис (сухие) — 60–70 г",
+            "Овощи/салат — 250–300 г",
+            "Оливковое масло — 1 ч.л."
+          ]
+        },
+        {
+          title: `🍏 Перекус ≈ ${s.snack} ккал`,
+          hint:  "Поддержка без резких скачков и чувства голода.",
+          lines: [
+            "Творог 5% — 180–220 г",
+            "Фрукт — 1 шт",
+            "Вода — 1 стакан"
+          ]
+        },
+        {
+          title: `🥗 Ужин ≈ ${s.dinner} ккал`,
+          hint:  "Лёгкий и восстановительный, особенно после практики.",
+          lines: [
+            "Овощи — 300–400 г",
+            "Белок (яйца/рыба/творог) — 1 вариант",
+            "Если хочется — гарнир маленькой порцией"
+          ]
+        }
+      ];
 
-      if(name.includes("egg") || name.includes("яй")) idx = 0;
-      if(name.includes("chick") || name.includes("кур")) idx = 1;
-      if(name.includes("fish") || name.includes("рыб")) idx = 2;
-      if(name.includes("curd") || name.includes("твор")) idx = 3;
-
-      return demoRecognitions[idx];
-    }
-
-    function buildSmartMenu(list){
-      const items = list.split(",").map(x=>x.trim()).filter(Boolean);
-      const nice = items.length ? items.join(", ") : "продукты";
-
-      const out = `
-        <div class="menuDay">
-          <h4>Меню из того, что есть</h4>
-          <p class="dayHint">На основе: <b>${safeText(nice)}</b>. Это демо-логика для презентации заказчику.</p>
-
-          <div class="menuDay" style="margin:0 0 12px; background:#fff;">
-            <h4 style="margin:0 0 8px;">🫐 Завтрак</h4>
-            <ul class="menuLines">
-              <li>Основа: овсянка/йогурт/творог (выбери 1)</li>
-              <li>Фрукт/ягоды (что есть)</li>
-              <li>Белок: яйца 1–2 шт (если есть)</li>
+      $("dayBox").innerHTML = `
+        <div class="dayCard">
+          <h3>Пример на один день</h3>
+          <p class="dayHint">Это гибкий ориентир: можно менять продукты, сохраняя структуру «белок + овощи + умеренно гарнир».</p>
+        </div>
+        ${blocks.map(b => `
+          <div class="dayCard">
+            <h3>${safeText(b.title)}</h3>
+            <p class="dayHint">${safeText(b.hint)}</p>
+            <ul class="lines">
+              ${b.lines.map(x => `<li>${safeText(x)}</li>`).join("")}
             </ul>
           </div>
-
-          <div class="menuDay" style="margin:0 0 12px; background:#fff;">
-            <h4 style="margin:0 0 8px;">🍲 Обед</h4>
-            <ul class="menuLines">
-              <li>Белок: курица/рыба/индейка/бобовые (что есть)</li>
-              <li>Гарнир: рис/гречка/картофель (что есть)</li>
-              <li>Овощи/салат — побольше</li>
-            </ul>
-          </div>
-
-          <div class="menuDay" style="margin:0 0 12px; background:#fff;">
-            <h4 style="margin:0 0 8px;">🍏 Перекус</h4>
-            <ul class="menuLines">
-              <li>Творог/йогурт или фрукт</li>
-              <li>Орехи 10–15 г (если есть)</li>
-            </ul>
-          </div>
-
-          <div class="menuDay" style="margin:0; background:#fff;">
-            <h4 style="margin:0 0 8px;">🥗 Ужин</h4>
-            <ul class="menuLines">
-              <li>Овощи</li>
-              <li>Лёгкий белок: яйца/рыба/творог</li>
-              <li>Если после йоги голодно — добавь гарнир маленькой порцией</li>
-            </ul>
-          </div>
-
-          <div class="pill">✨ Вау-деталь: меню подстраивается под «что есть», а не заставляет покупать продукты.</div>
+        `).join("")}
+        <div class="dayCard">
+          <div class="pill">✨ Если есть усталость — добавьте воды и овощей, а ужин сделайте легче.</div>
         </div>
       `;
-
-      byId("smartMenuBox").style.display = "block";
-      byId("smartMenuBox").innerHTML = out;
     }
 
-    // ===== СТАРТ: НАВЕШИВАЕМ КНОПКИ (чтобы «Рассчитать» всегда работала) =====
+    function renderWeekMenu(totalKcal){
+      const s = kcalSplit(totalKcal);
+
+      const breakfast = [
+        "Овсянка 60 г + ягоды 100 г + яйцо 1–2 шт",
+        "Творог 200 г + фрукт 1 шт + орехи 10 г",
+        "Омлет 2 яйца + овощи 250 г",
+        "Йогурт 250 г + фрукты + немного орехов"
+      ];
+      const lunch = [
+        "Курица 150 г + гречка 60–70 г (сухая) + салат 300 г",
+        "Рыба 170 г + рис 60 г (сухая) + овощи 300 г",
+        "Индейка 150 г + картофель 250 г + овощи 250 г",
+        "Чечевица/фасоль 200 г + овощи 300 г + масло 1 ч.л."
+      ];
+      const snack = [
+        "Творог 180–220 г + фрукт",
+        "Йогурт 200–250 г + ягоды",
+        "Фрукт + орехи 15 г",
+        "Кефир/ряженка 250 мл"
+      ];
+      const dinner = [
+        "Овощи 350 г + рыба 140 г",
+        "Овощи 350 г + яйца 2 шт",
+        "Овощи 350 г + творог 150 г",
+        "Овощи 350 г + курица 120–140 г"
+      ];
+
+      const days = [
+        { name:"Понедельник", vibe:"баланс и настрой" },
+        { name:"Вторник", vibe:"лёгкость" },
+        { name:"Среда", vibe:"стабильная энергия" },
+        { name:"Четверг", vibe:"восстановление" },
+        { name:"Пятница", vibe:"устойчивость" },
+        { name:"Суббота", vibe:"гибкость" },
+        { name:"Воскресенье", vibe:"мягкий день" }
+      ];
+
+      const pick = (arr, i) => arr[i % arr.length];
+
+      $("weekBox").innerHTML = `
+        <div class="dayCard">
+          <h3>Меню на неделю</h3>
+          <p class="dayHint">Суточная цель: ≈ ${totalKcal} ккал. Меняем продукты, сохраняя структуру — так легче держать баланс.</p>
+          <div class="mini">Калории по приёмам пищи: завтрак ~${s.breakfast}, обед ~${s.lunch}, перекус ~${s.snack}, ужин ~${s.dinner} ккал.</div>
+        </div>
+
+        ${days.map((d, i) => `
+          <div class="dayCard">
+            <h3>${safeText(d.name)} — ${safeText(d.vibe)}</h3>
+            <ul class="lines">
+              <li><b>🫐 Завтрак (~${s.breakfast} ккал):</b> ${safeText(pick(breakfast, i))}</li>
+              <li><b>🍲 Обед (~${s.lunch} ккал):</b> ${safeText(pick(lunch, i))}</li>
+              <li><b>🍏 Перекус (~${s.snack} ккал):</b> ${safeText(pick(snack, i))}</li>
+              <li><b>🥗 Ужин (~${s.dinner} ккал):</b> ${safeText(pick(dinner, i))}</li>
+            </ul>
+            <div class="mini">Подсказка: овощи в каждом приёме дают сытость и помогают держать курс мягко.</div>
+          </div>
+        `).join("")}
+
+        <div class="dayCard">
+          <div class="pill">✨ Эту неделю можно повторять 3–4 раза — получится месяц без перегруза.</div>
+        </div>
+      `;
+    }
+
+    // Smart menu logic
+    const photoSets = [
+      "яйца, творог, овсянка, овощи, яблоки",
+      "курица, рис, овощи, йогурт, бананы",
+      "рыба, гречка, овощи, творог, ягоды",
+      "индейка, картофель, овощи, яйца, яблоки"
+    ];
+
+    function simulatePhotoRecognition(file){
+      // мягкая имитация: по имени файла или случайно
+      const name = (file?.name || "").toLowerCase();
+      if(name.includes("egg") || name.includes("яй")) return photoSets[0];
+      if(name.includes("chick") || name.includes("кур")) return photoSets[1];
+      if(name.includes("fish") || name.includes("рыб")) return photoSets[2];
+      return photoSets[Math.floor(Math.random() * photoSets.length)];
+    }
+
+    function normalizeList(raw){
+      return raw.split(",")
+        .map(s => s.trim().toLowerCase())
+        .filter(Boolean)
+        .slice(0, 30);
+    }
+
+    function smartMenuFromList(items){
+      const has = (key) => items.some(x => x.includes(key));
+
+      const breakfast =
+        has("овся") ? "Овсянка + ягоды/фрукты + яйцо (если есть)" :
+        has("твор") ? "Творог + фрукт + орехи (если есть)" :
+        has("яйц")  ? "Омлет + овощи" :
+        "Каша/йогурт + фрукт";
+
+      const lunch =
+        (has("кур") || has("индей")) ? "Белок (курица/индейка) + гарнир + салат" :
+        has("рыб") ? "Рыба + овощи + гарнир (по желанию)" :
+        has("греч") || has("рис") ? "Крупа + овощи + белок (что есть)" :
+        "Тёплая тарелка: белок + овощи + немного гарнира";
+
+      const snack =
+        has("йогур") ? "Йогурт + ягоды/фрукт" :
+        has("твор") ? "Творог + фрукт" :
+        has("кеф") ? "Кефир/ряженка + фрукт" :
+        "Фрукт + вода";
+
+      const dinner =
+        has("рыб") ? "Рыба + овощи" :
+        has("яйц") ? "Омлет/яйца + салат" :
+        has("твор") ? "Творог + ягоды (если поздно)" :
+        "Овощи + лёгкий белок";
+
+      return { breakfast, lunch, snack, dinner };
+    }
+
+    function renderSmartMenu(title, itemsText, menu){
+      $("smartOut").style.display = "block";
+      $("smartOut").innerHTML = `
+        <div class="dayCard">
+          <h3>${safeText(title)}</h3>
+          <p class="dayHint">На основе: <b>${safeText(itemsText)}</b>. Можно менять продукты, сохраняя структуру дня.</p>
+          <ul class="lines">
+            <li><b>🫐 Завтрак:</b> ${safeText(menu.breakfast)}</li>
+            <li><b>🍲 Обед:</b> ${safeText(menu.lunch)}</li>
+            <li><b>🍏 Перекус:</b> ${safeText(menu.snack)}</li>
+            <li><b>🥗 Ужин:</b> ${safeText(menu.dinner)}</li>
+          </ul>
+          <div class="pill">🤍 Мы используем то, что уже есть дома — без лишних покупок.</div>
+        </div>
+      `;
+    }
+
+    // Events
     document.addEventListener("DOMContentLoaded", () => {
-      const calcBtn = byId("calcBtn");
-      const smartBtn = byId("smartMenuBtn");
-      const fillBtn = byId("fillFromPhotoBtn");
-      const photoInput = byId("fridgePhoto");
+      const calcBtn = $("calcBtn");
+      const smartBtn = $("smartMenuBtn");
+      const fillFromPhotoBtn = $("fillFromPhotoBtn");
+      const photoInput = $("fridgePhoto");
+
+      let recognizedText = "";
 
       calcBtn.addEventListener("click", () => {
-        const model = calculateDaily();
+        const model = calculate();
         if(model) renderResults(model);
       });
 
-      byId("tabDay").addEventListener("click", ()=>showTab("day"));
-      byId("tabWeek").addEventListener("click", ()=>showTab("week"));
-
-      let recognized = "";
+      $("tabDay").addEventListener("click", () => showTab("day"));
+      $("tabWeek").addEventListener("click", () => showTab("week"));
 
       photoInput.addEventListener("change", (e) => {
         const file = e.target.files && e.target.files[0] ? e.target.files[0] : null;
-        recognized = simulateRecognition(file);
-        const box = byId("fakeAiBox");
-        box.style.display = "block";
-        box.textContent = `✅ Демо-распознано на фото: ${recognized}`;
+        if(!file){ recognizedText = ""; return; }
+        recognizedText = simulatePhotoRecognition(file);
       });
 
-      fillBtn.addEventListener("click", () => {
-        if(!recognized){
-          alert("Сначала выбери фото (для демо-распознавания).");
+      fillFromPhotoBtn.addEventListener("click", () => {
+        $("warnSmart").style.display = "none";
+        const file = photoInput.files && photoInput.files[0] ? photoInput.files[0] : null;
+        if(!file){
+          $("warnSmart").style.display = "block";
+          $("warnSmart").textContent = "Сначала выберите фото, а потом нажмите «Заполнить по фото».";
           return;
         }
-        byId("products").value = recognized;
+        if(!recognizedText) recognizedText = simulatePhotoRecognition(file);
+        $("products").value = recognizedText;
       });
 
       smartBtn.addEventListener("click", () => {
-        const list = byId("products").value.trim();
-        if(!list){
-          alert("Введи продукты (через запятую) или нажми «Заполнить из фото».");
+        $("warnSmart").style.display = "none";
+        const raw = $("products").value.trim();
+        if(!raw){
+          $("warnSmart").style.display = "block";
+          $("warnSmart").textContent = "Пожалуйста, добавьте список продуктов (или нажмите «Заполнить по фото»).";
           return;
         }
-        buildSmartMenu(list);
+        const items = normalizeList(raw);
+        const menu = smartMenuFromList(items);
+        renderSmartMenu("Меню из того, что есть", raw, menu);
       });
     });
   </script>
